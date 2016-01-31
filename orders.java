@@ -17,9 +17,6 @@ public class orders {
      */
     private ArrayList<orderItem> items;
 
-
-
-
     /**
      * @param Index 
      * @return
@@ -43,7 +40,6 @@ public class orders {
      */
     public void addItem(orderItem Item) {
         // TODO implement here
-        return null;
     }
 
     /**
@@ -51,15 +47,7 @@ public class orders {
      */
     public void clearOrders() {
         // TODO implement here
-        return null;
     }
 
-    /**
-     * @return
-     */
-    public void orders() {
-        // TODO implement here
-        return null;
-    }
 
 }

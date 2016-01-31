@@ -1,31 +1,22 @@
-
-import java.util.*;
-
 /**
  * The main class of the application
  */
 public class restaurant {
 
     /**
-     * Default constructor
+     * 
      */
-    public restaurant() {
-    }
+    public static restaurantModel model;
 
     /**
      * 
      */
-    public restaurantModel model;
+    public static restaurantController controller;
 
     /**
      * 
      */
-    public restaurantController controller;
-
-    /**
-     * 
-     */
-    public restaurantView view;
+    public static restaurantView view;
 
     /**
      * @param args 
@@ -33,7 +24,13 @@ public class restaurant {
      */
     public void main(String args) {
         // TODO implement here
-        return null;
+    	model = new restaurantModel();
+    	controller = new restaurantController(model);
+    	view = new restaurantView(controller, model);
+    	controller.loadMenu("menu.txt");
+    	controller.loadOrders("orders.txt");
+    	controller.saveReport("output.txt");
+    	view.showGUI();
     }
 
 }

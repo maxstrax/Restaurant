@@ -7,12 +7,6 @@ import java.util.*;
 public class restaurantView {
 
     /**
-     * Default constructor
-     */
-    public restaurantView() {
-    }
-
-    /**
      * 
      */
     private restaurantController Controller;
@@ -30,7 +24,6 @@ public class restaurantView {
      */
     public void setup(restaurantController Controller, restaurantModel Model) {
         // TODO implement here
-        return null;
     }
 
     /**
@@ -38,9 +31,8 @@ public class restaurantView {
      * @param Model 
      * @return
      */
-    public void restaurantView(restaurantController Controller, restaurantModel Model) {
+    public restaurantView(restaurantController Controller, restaurantModel Model) {
         // TODO implement here
-        return null;
     }
 
     /**
@@ -48,7 +40,6 @@ public class restaurantView {
      */
     public void showGUI() {
         // TODO implement here
-        return null;
     }
 
     /**
@@ -56,7 +47,6 @@ public class restaurantView {
      */
     public void showUI() {
         // TODO implement here
-        return null;
     }
 
 }

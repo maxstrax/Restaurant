@@ -6,11 +6,6 @@ import java.util.*;
  */
 public class menuItem {
 
-    /**
-     * Default constructor
-     */
-    public menuItem() {
-    }
 
     /**
      * 
@@ -28,15 +23,12 @@ public class menuItem {
     private itemCategory category;
 
 
-
-
     /**
      * @param Name 
      * @return
      */
     public void setName(String Name) {
         // TODO implement here
-        return null;
     }
 
     /**
@@ -45,7 +37,6 @@ public class menuItem {
      */
     public void setPrice(Float Price) {
         // TODO implement here
-        return null;
     }
 
     /**
@@ -54,7 +45,6 @@ public class menuItem {
      */
     public void setCategory(itemCategory Category) {
         // TODO implement here
-        return null;
     }
 
     /**
@@ -86,7 +76,7 @@ public class menuItem {
      * @param Price 
      * @param Category
      */
-    public void menuItem(String Name, Float Price, itemCategory Category) {
+    public menuItem(String Name, Float Price, itemCategory Category) {
         // TODO implement here
     }
 

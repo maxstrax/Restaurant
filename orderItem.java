@@ -6,11 +6,6 @@ import java.util.*;
  */
 public class orderItem {
 
-    /**
-     * Default constructor
-     */
-    public orderItem() {
-    }
 
     /**
      * 
@@ -37,7 +32,7 @@ public class orderItem {
      * @param Name 
      * @param Quantity
      */
-    public void orderItem(Integer TableId, String Name, Integer Quantity) {
+    public orderItem(Integer TableId, String Name, Integer Quantity) {
         // TODO implement here
     }
 
@@ -47,7 +42,6 @@ public class orderItem {
      */
     public void setTable(Integer TableId) {
         // TODO implement here
-        return null;
     }
 
     /**
@@ -56,7 +50,6 @@ public class orderItem {
      */
     public void setName(String Name) {
         // TODO implement here
-        return null;
     }
 
     /**
@@ -65,7 +58,6 @@ public class orderItem {
      */
     public void setItem(menuItem Item) {
         // TODO implement here
-        return null;
     }
 
     /**
@@ -74,7 +66,6 @@ public class orderItem {
      */
     public void setQuantity(Integer Quantity) {
         // TODO implement here
-        return null;
     }
 
     /**

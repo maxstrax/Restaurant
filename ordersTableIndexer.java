@@ -7,12 +7,6 @@ import java.util.*;
 public class ordersTableIndexer {
 
     /**
-     * Default constructor
-     */
-    public ordersTableIndexer() {
-    }
-
-    /**
      * 
      */
     private HashMap<Integer, LinkedList<Integer>> tableOrders;
@@ -25,7 +19,6 @@ public class ordersTableIndexer {
      */
     public void create(orders dailyOrders) {
         // TODO implement here
-        return null;
     }
 
     /**
@@ -62,7 +55,7 @@ public class ordersTableIndexer {
      * calls create(dailyOrders)
      * @param dailyOrders
      */
-    public void ordersTableIndexer(orders dailyOrders) {
+    public ordersTableIndexer(orders dailyOrders) {
         // TODO implement here
     }
 

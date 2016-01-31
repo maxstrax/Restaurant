@@ -15,7 +15,7 @@ public class menu {
     /**
      * 
      */
-    private ArraList<menuItem> items;
+    private ArrayList<menuItem> items;
 
 
 
@@ -43,7 +43,6 @@ public class menu {
      */
     public void addItem(menuItem Items) {
         // TODO implement here
-        return null;
     }
 
     /**
@@ -51,7 +50,5 @@ public class menu {
      */
     public void clearMenu() {
         // TODO implement here
-        return null;
     }
-
 }

@@ -7,12 +7,6 @@ import java.util.*;
 public class ordersNameIndexer {
 
     /**
-     * Default constructor
-     */
-    public ordersNameIndexer() {
-    }
-
-    /**
      * 
      */
     private HashMap<String, LinkedList<Integer>> orderNames;
@@ -25,7 +19,6 @@ public class ordersNameIndexer {
      */
     public void create(orders dailyOrders) {
         // TODO implement here
-        return null;
     }
 
     /**
@@ -62,7 +55,7 @@ public class ordersNameIndexer {
      * calls create(dailyOrders)
      * @param dailyOrders
      */
-    public void ordersNameIndexer(orders dailyOrders) {
+    public ordersNameIndexer(orders dailyOrders) {
         // TODO implement here
     }
 

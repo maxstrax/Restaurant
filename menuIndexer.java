@@ -7,12 +7,6 @@ import java.util.*;
 public class menuIndexer {
 
     /**
-     * Default constructor
-     */
-    public menuIndexer() {
-    }
-
-    /**
      * 
      */
     private HashMap<String, Integer> index;
@@ -34,14 +28,13 @@ public class menuIndexer {
      */
     public void create(menu mainMenu) {
         // TODO implement here
-        return null;
     }
 
     /**
      * calls create(mainMenu). The  object must be fully populated!
      * @param mainMenu
      */
-    public void menuIndexer(menu mainMenu) {
+    public menuIndexer(menu mainMenu) {
         // TODO implement here
     }
 

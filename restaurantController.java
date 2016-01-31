@@ -1,24 +1,12 @@
-
-import java.util.*;
-
 /**
  * Used to manipulate the data of the model.
  */
 public class restaurantController {
 
     /**
-     * Default constructor
-     */
-    public restaurantController() {
-    }
-
-    /**
      * 
      */
     private restaurantModel model;
-
-
-
 
     /**
      * @param newModel 
@@ -26,7 +14,6 @@ public class restaurantController {
      */
     public void setModel(restaurantModel newModel) {
         // TODO implement here
-        return null;
     }
 
     /**
@@ -37,7 +24,6 @@ public class restaurantController {
      */
     public void createIndexers() {
         // TODO implement here
-        return null;
     }
 
     /**
@@ -47,7 +33,6 @@ public class restaurantController {
      */
     public void loadMenu(String filename) {
         // TODO implement here
-        return null;
     }
 
     /**
@@ -57,7 +42,6 @@ public class restaurantController {
      */
     public void loadOrders(String filename) {
         // TODO implement here
-        return null;
     }
 
     /**
@@ -104,7 +88,6 @@ public class restaurantController {
      */
     public void saveReport(String filename) {
         // TODO implement here
-        return null;
     }
 
     /**
@@ -114,6 +97,14 @@ public class restaurantController {
     public float calculateDiscount(float toPay) {
         // TODO implement here
         return 0.0f;
+    }
+
+    /**
+     * Calls setModel(newModel)
+     * @param newModel
+     */
+    public restaurantController(restaurantModel newModel) {
+        // TODO implement here
     }
 
 }
