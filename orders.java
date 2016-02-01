@@ -7,15 +7,12 @@ import java.util.*;
 public class orders {
 
     /**
-     * Default constructor
-     */
-    public orders() {
-    }
-
-    /**
      * 
      */
     private ArrayList<orderItem> items;
+
+
+
 
     /**
      * @param Index 
@@ -49,5 +46,11 @@ public class orders {
         // TODO implement here
     }
 
+    /**
+     * @return
+     */
+    public orders() {
+        // TODO implement here
+    }
 
 }

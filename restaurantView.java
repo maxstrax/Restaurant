@@ -6,6 +6,7 @@ import java.util.*;
  */
 public class restaurantView {
 
+
     /**
      * 
      */
@@ -28,8 +29,7 @@ public class restaurantView {
 
     /**
      * @param Controller 
-     * @param Model 
-     * @return
+     * @param Model
      */
     public restaurantView(restaurantController Controller, restaurantModel Model) {
         // TODO implement here

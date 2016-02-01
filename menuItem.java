@@ -6,7 +6,6 @@ import java.util.*;
  */
 public class menuItem {
 
-
     /**
      * 
      */
@@ -21,6 +20,8 @@ public class menuItem {
      * 
      */
     private itemCategory category;
+
+
 
 
     /**

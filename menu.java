@@ -7,12 +7,6 @@ import java.util.*;
 public class menu {
 
     /**
-     * Default constructor
-     */
-    public menu() {
-    }
-
-    /**
      * 
      */
     private ArrayList<menuItem> items;
@@ -51,4 +45,12 @@ public class menu {
     public void clearMenu() {
         // TODO implement here
     }
+
+    /**
+     * 
+     */
+    public menu() {
+        // TODO implement here
+    }
+
 }

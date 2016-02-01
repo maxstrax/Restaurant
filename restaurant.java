@@ -1,36 +1,38 @@
+
+import java.util.*;
+
 /**
  * The main class of the application
  */
 public class restaurant {
 
     /**
-     * 
+     * Default constructor
      */
-    public static restaurantModel model;
+    public restaurant() {
+    }
 
     /**
      * 
      */
-    public static restaurantController controller;
+    public static restaurantModel model = null;
 
     /**
      * 
      */
-    public static restaurantView view;
+    public static restaurantController controller = null;
+
+    /**
+     * 
+     */
+    public static restaurantView view = null;
 
     /**
      * @param args 
      * @return
      */
-    public void main(String args) {
+    public static void main(String args) {
         // TODO implement here
-    	model = new restaurantModel();
-    	controller = new restaurantController(model);
-    	view = new restaurantView(controller, model);
-    	controller.loadMenu("menu.txt");
-    	controller.loadOrders("orders.txt");
-    	controller.saveReport("output.txt");
-    	view.showGUI();
     }
 
 }

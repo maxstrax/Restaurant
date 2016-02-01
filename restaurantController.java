@@ -1,3 +1,6 @@
+
+import java.util.*;
+
 /**
  * Used to manipulate the data of the model.
  */
@@ -7,6 +10,9 @@ public class restaurantController {
      * 
      */
     private restaurantModel model;
+
+
+
 
     /**
      * @param newModel 
