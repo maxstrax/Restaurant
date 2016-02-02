@@ -32,6 +32,9 @@ public class AseGui extends JFrame implements ActionListener{
         super("Order Details");
         this.setBounds(10, 50, 400, 300);
         
+	setDefaultCloseOperation(EXIT_ON_CLOSE);
+
+        
         JPanel searchPanel = new JPanel();
         
         searchPanel.add(new JLabel("Enter order number:"));   
