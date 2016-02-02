@@ -1,6 +1,8 @@
 
 import java.util.*;
 
+import javax.swing.SwingUtilities;
+
 /**
  * Used to provide a Graphical User Interface, as well as command line interface to the user.
  */
@@ -39,7 +41,16 @@ public class restaurantView {
      * @return
      */
     public void showGUI() {
-        // TODO implement here
+
+    	SwingUtilities.invokeLater(new Runnable() {
+    		 
+            @Override
+            public void run() {
+                new AseGui().setVisible(true);
+                
+            }
+        });
+    	
     }
 
     /**
@@ -50,3 +61,4 @@ public class restaurantView {
     }
 
 }
+
