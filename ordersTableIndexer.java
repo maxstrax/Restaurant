@@ -25,7 +25,7 @@ public class ordersTableIndexer {
      * Returns all the indexed TableIds
      * @return
      */
-    public List<Integer> getTableIds() {
+    public Set<Integer> getTableIds() {
         // TODO implement here
         return null;
     }
@@ -46,7 +46,7 @@ public class ordersTableIndexer {
      * @param OrderNo 
      * @return
      */
-    public Integer getIndexOf(Integer tableId, Integer OrderNo) {
+    public Integer getIndexOf(Integer tableId, Integer OrderNo) throws invalidTableIdException, ArrayIndexOutOfBoundsException {
         // TODO implement here
         return null;
     }

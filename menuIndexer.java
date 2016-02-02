@@ -16,7 +16,7 @@ public class menuIndexer {
      * @param Name 
      * @return
      */
-    public Integer getIndexOf(String Name) {
+    public Integer getIndexOf(String Name) throws invalidNameException {
         // TODO implement here
         return null;
     }

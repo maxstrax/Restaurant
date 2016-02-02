@@ -5,5 +5,6 @@
 public enum itemCategory {
     Starter,
     Main,
-    Dessert
+    Dessert,
+    Drinks
 }

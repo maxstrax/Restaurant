@@ -55,13 +55,13 @@ public class ordersNameIndexer {
      * @param index 
      * @return
      */
-    public Integer getIndexOf(String name, Integer index) {
+    public Integer getIndexOf(String name, Integer index) throws invalidNameException, ArrayIndexOutOfBoundsException{
         if(!this.orderNames.containsKey(name))
-        	return null;
+        	throw new invalidNameException(name);
         else {
         	List<Integer> indices = this.orderNames.get(name);
         	if(indices.size() <= index || index < 0)
-        		return null;
+        		throw new ArrayIndexOutOfBoundsException(index);
         	else
         		return indices.get(index);
         }
