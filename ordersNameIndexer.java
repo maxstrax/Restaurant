@@ -18,16 +18,26 @@ public class ordersNameIndexer {
      * @return
      */
     public void create(orders dailyOrders) {
-        // TODO implement here
+    	this.orderNames.clear(); //if we have previous values, clear them up. DEBUG INFO <- if it crushes here orderNames is not allocated with new
+    	String orderItemName = null;
+    	LinkedList<Integer> l = null;
+    	for(int i=0; i<dailyOrders.countItems(); i++) {
+    		orderItemName = dailyOrders.getItem(i).getName();
+    		if(orderNames.containsKey(orderItemName)) {	// if key does not exist
+    			l = new LinkedList<Integer>();			//   create a new linkedlist
+    			orderNames.put(orderItemName, l);		//   add it as the value to the key (order name)
+    		}
+    												// if key exists -> the list is allocated and initialized
+    		orderNames.get(orderItemName).add(i);	//   add the new key at the end
+    	}
     }
 
     /**
      * Returns a collection of the names in the index
      * @return
      */
-    public List<String> getNames() {
-        // TODO implement here
-        return null;
+    public Set<String> getNames() {
+        return this.orderNames.keySet();
     }
 
     /**
@@ -36,8 +46,7 @@ public class ordersNameIndexer {
      * @return
      */
     public Integer getOrdersCount(String Name) {
-        // TODO implement here
-        return null;
+        return this.orderNames.size();
     }
 
     /**
@@ -47,8 +56,15 @@ public class ordersNameIndexer {
      * @return
      */
     public Integer getIndexOf(String name, Integer index) {
-        // TODO implement here
-        return null;
+        if(!this.orderNames.containsKey(name))
+        	return null;
+        else {
+        	List<Integer> indices = this.orderNames.get(name);
+        	if(indices.size() <= index || index < 0)
+        		return null;
+        	else
+        		return indices.get(index);
+        }
     }
 
     /**
@@ -56,7 +72,8 @@ public class ordersNameIndexer {
      * @param dailyOrders
      */
     public ordersNameIndexer(orders dailyOrders) {
-        // TODO implement here
+    	this.orderNames = new HashMap<String, LinkedList<Integer>>(); //init our map
+    	this.create(dailyOrders);
     }
 
 }

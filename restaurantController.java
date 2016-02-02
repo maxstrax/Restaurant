@@ -19,7 +19,7 @@ public class restaurantController {
      * @return
      */
     public void setModel(restaurantModel newModel) {
-        // TODO implement here
+        this.model = newModel;
     }
 
     /**
@@ -29,7 +29,11 @@ public class restaurantController {
      * @return
      */
     public void createIndexers() {
-        // TODO implement here
+        if(model == null)
+        	return;
+        this.model.dailyOrdersNameIndexer = new ordersNameIndexer(this.model.dailyOrders);
+        this.model.dailyOrdersTableIndexer = new ordersTableIndexer(this.model.dailyOrders);
+        this.model.mainMenuIndexer = new menuIndexer(this.model.mainMenu);
     }
 
     /**
@@ -83,8 +87,11 @@ public class restaurantController {
      * @return
      */
     public String getMenu() {
-        // TODO implement here
-        return "";
+        if(model == null)
+        	return "";
+        String ret = "MENU\n";
+        
+        return ret;
     }
 
     /**
@@ -102,7 +109,7 @@ public class restaurantController {
      */
     public float calculateDiscount(float toPay) {
         // TODO implement here
-        return 0.0f;
+        return (toPay > 10.0f)? 0.2f * toPay : 0.0f;
     }
 
     /**
@@ -110,7 +117,7 @@ public class restaurantController {
      * @param newModel
      */
     public restaurantController(restaurantModel newModel) {
-        // TODO implement here
+        this.setModel(newModel);
     }
 
 }

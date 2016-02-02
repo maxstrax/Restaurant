@@ -1,6 +1,3 @@
-
-import java.util.*;
-
 /**
  * The main class of the application
  */
@@ -32,7 +29,14 @@ public class restaurant {
      * @return
      */
     public static void main(String args) {
-        // TODO implement here
+        model = new restaurantModel();
+        controller = new restaurantController(model);
+        view = new restaurantView(controller, model);
+        controller.loadMenu("menu.txt");
+        controller.loadOrders("orders.txt");
+        controller.createIndexers();
+        controller.saveReport("report.txt");
+        view.showGUI();
     }
 
 }
