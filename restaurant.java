@@ -28,15 +28,15 @@ public class restaurant {
      * @param args 
      * @return
      */
-    public static void main(String args) {
+    public static void main(String[] args) {
         try {
 	        model = new restaurantModel();
 	        controller = new restaurantController(model);
 	        view = new restaurantView(controller, model);
-			controller.loadMenu("menu.txt");
-	        controller.loadOrders("orders.txt");
-	        controller.createIndexers();
-	        controller.saveReport("report.txt");
+			//controller.loadMenu("menu.txt");
+	        //controller.loadOrders("orders.txt");
+	        //controller.createIndexers();
+	        //controller.saveReport("report.txt");
 	        view.showGUI();
 		} catch (Exception e) {
 			e.printStackTrace();
