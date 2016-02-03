@@ -1,9 +1,12 @@
 
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Set;
+import java.util.TreeSet;
 
 /**
  * Used to manipulate the data of the model.
@@ -59,7 +62,7 @@ public class restaurantController {
 				line++;
 				if(ss.length != 3)
 					throw new invalidFileFormatException(filename, line);
-				this.model.mainMenu.addItem(new menuItem(ss[0], Float.parseFloat(ss[1]), itemCategory.valueOf(ss[2])));
+				this.model.mainMenu.addItem(new menuItem(ss[0].trim(), Float.parseFloat(ss[1].trim()), itemCategory.valueOf(ss[2].trim())));
 			}
 			br.close();
 		} catch (FileNotFoundException e) {
@@ -91,7 +94,7 @@ public class restaurantController {
 				line++;
 				if(ss.length != 3)
 					throw new invalidFileFormatException(filename, line);
-				this.model.dailyOrders.addItem(new orderItem(Integer.parseInt(ss[0]), ss[1], Integer.parseInt(ss[2])));
+				this.model.dailyOrders.addItem(new orderItem(Integer.parseInt(ss[0].trim()), ss[1].trim(), Integer.parseInt(ss[2].trim())));
 			}
 			br.close();
 		} catch (FileNotFoundException e) {
@@ -118,7 +121,7 @@ public class restaurantController {
         s = "TABLE SUMMARY\n";
         s += "=============\n";
         s += "TABLE " + tableId;
-        float price_total = 0.0f, discount = 0.0f;
+        float price_total = 0.0f, discount = 0.0f, price;
         orderItem oi;
         menuItem mi;
         int orderindex, menuindex, count = this.model.dailyOrdersTableIndexer.getOrdersCount(tableId);
@@ -127,13 +130,15 @@ public class restaurantController {
         	oi = this.model.dailyOrders.getItem(orderindex);
         	menuindex = this.model.mainMenuIndexer.getIndexOf(oi.getName());
         	mi = this.model.mainMenu.getMenu(menuindex);
-        	s += mi.getName() + "\t" + oi.getQuantity() + " * " + mi.getPrice() + " = " + (oi.getQuantity() * mi.getPrice());
+        	price = (oi.getQuantity() * mi.getPrice());
+        	s += mi.getName() + "\t" + oi.getQuantity() + " * " + mi.getPrice() + " = " + price + "\n";
+        	price_total += price;
         }
-        s += "=====";
+        s += "\n=====";
         s += "Total for this table :\t\t" + price_total;
         discount = this.calculateDiscount(price_total);
         s += "Discount :\t\t\t\t" + discount;
-        s += "Discounted total :\t\t\t" + (price_total - discount);
+        s += "Discounted total :\t\t\t" + (price_total - discount) + "\n";
         return s;
     }
 
@@ -156,10 +161,23 @@ public class restaurantController {
     /**
      * returns a string with the frequency with which an item was orders
      * @return
+     * @throws invalidNameException 
      */
-    public String getFrequency() {
-        // TODO implement here
-        return "";
+    public String getFrequency() throws invalidNameException {
+        String s = "";
+        s += "FREAQUENCY REPORT";
+        s += "=================";
+        for(String name : new TreeSet<String>(this.model.dailyOrdersNameIndexer.getNames())) {
+        	if(!this.model.mainMenuIndexer.getNames().contains(name))
+        		throw new invalidNameException(name);
+        	s += name + "\t" + this.model.dailyOrdersNameIndexer.getOrdersCount(name) + "\n";
+        }
+        s += "\nDISHES NOT ORDERED";
+        s += "==================";
+        for(String name : new TreeSet<String>(this.model.mainMenuIndexer.getNames()))
+        	if(!this.model.dailyOrdersNameIndexer.getNames().contains(name))
+        		s += name + "\n";
+        return s;
     }
 
     /**
@@ -182,9 +200,17 @@ public class restaurantController {
      * Writes a text file with the report of the day
      * @param filename 
      * @return
+     * @throws IOException 
+     * @throws invalidNameException 
+     * @throws invalidTableIdException 
+     * @throws ArrayIndexOutOfBoundsException 
      */
-    public void saveReport(String filename) {
-        // TODO implement here
+    public void saveReport(String filename) throws IOException, invalidNameException, ArrayIndexOutOfBoundsException, invalidTableIdException {
+        BufferedWriter bw = new BufferedWriter(new FileWriter(filename));
+        bw.write(this.getMenu());
+        bw.write(this.getFrequency());
+        bw.write(this.getBills());
+        bw.close();
     }
 
     /**
