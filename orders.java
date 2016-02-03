@@ -20,7 +20,7 @@ public class orders {
      */
     public orderItem getItem(Integer Index) {
         // TODO implement here
-     return items.get(Index);
+     return this.items.get(Index);
     }
 
     /**
@@ -28,7 +28,7 @@ public class orders {
      */
     public Integer countItems() {
         // TODO implement here
-        return items.size();
+        return this.items.size();
     }
 
     /**
@@ -36,21 +36,21 @@ public class orders {
      * @return
      */
     public void addItem(orderItem Item) {
-        items.add(Item);
+        this.items.add(Item);
     }
 
     /**
      * @return
      */
     public void clearOrders() {
-    	items.clear();
+    	this.items.clear();
     }
 
     /**
      * @return
      */
     public orders() {
-    	items = new ArrayList<orderItem> (); 
+    	this.items = new ArrayList<orderItem> (); 
     }
 
 }

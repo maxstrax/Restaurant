@@ -23,7 +23,7 @@ public class ordersTableIndexer {
     	LinkedList<Integer> l = null;
     	for(int i=0; i<dailyOrders.countItems(); i++) {
     		tableId = dailyOrders.getItem(i).getTableId();
-    		if(tableOrders.containsKey(tableId)) {	// if key does not exist
+    		if(!tableOrders.containsKey(tableId)) {	// if key does not exist
     			l = new LinkedList<Integer>();			//   create a new linkedlist
     			tableOrders.put(tableId, l);		//   add it as the value to the key (order name)
     		}
