@@ -5,4 +5,8 @@ public class invalidCategoryException extends Exception {
 		super("The requested category does not exist " + category);
 	}
 
+	public invalidCategoryException() {
+		this("");
+	}
+	
 }
