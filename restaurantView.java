@@ -47,7 +47,7 @@ public class restaurantView {
     		 
             @Override
             public void run() {
-                new AseGui().setVisible(true);
+                new AseGui(Controller,Model).setVisible(true);
                 
             }
         });
