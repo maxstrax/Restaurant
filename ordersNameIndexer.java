@@ -23,7 +23,7 @@ public class ordersNameIndexer {
     	LinkedList<Integer> l = null;
     	for(int i=0; i<dailyOrders.countItems(); i++) {
     		orderItemName = dailyOrders.getItem(i).getName();
-    		if(orderNames.containsKey(orderItemName)) {	// if key does not exist
+    		if(!orderNames.containsKey(orderItemName)) {	// if key does not exist
     			l = new LinkedList<Integer>();			//   create a new linkedlist
     			orderNames.put(orderItemName, l);		//   add it as the value to the key (order name)
     		}
