@@ -42,7 +42,7 @@ public class menuIndexer {
      * returns a collection of all the names in the keys of the index.
      * @return
      */
-    public List<String> getNames() {
+    public Set<String> getNames() {
         // TODO implement here
         return null;
     }

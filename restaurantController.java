@@ -52,6 +52,8 @@ public class restaurantController {
      * @throws invalidCategoryException 
      */
     public void loadMenu(String filename) throws FileNotFoundException, invalidFileFormatException, invalidCategoryException {
+    	if(model == null)
+        	return;
         try {
 			@SuppressWarnings("resource")
 			BufferedReader br = new BufferedReader(new FileReader(filename));
@@ -97,6 +99,8 @@ public class restaurantController {
      * @throws FileNotFoundException 
      */
     public void loadOrders(String filename) throws invalidFileFormatException, FileNotFoundException {
+    	if(model == null)
+        	return;
         try {
 			@SuppressWarnings("resource")
 			BufferedReader br = new BufferedReader(new FileReader(filename));
@@ -130,6 +134,8 @@ public class restaurantController {
      * @throws invalidNameException 
      */
     public String getBill(Integer tableId) throws ArrayIndexOutOfBoundsException, invalidTableIdException, invalidNameException {
+    	if(model == null || this.model.dailyOrdersTableIndexer == null || this.model.mainMenuIndexer == null)
+        	return "";
         String s;
         s = "TABLE SUMMARY\n";
         s += "=============\n";
@@ -163,6 +169,8 @@ public class restaurantController {
      * @throws ArrayIndexOutOfBoundsException 
      */
     public String getBills() throws ArrayIndexOutOfBoundsException, invalidTableIdException, invalidNameException {
+    	if(model == null || this.model.dailyOrdersTableIndexer == null)
+        	return "";
         String s = "";
         Set<Integer> tables = this.model.dailyOrdersTableIndexer.getTableIds();
         for(int tableId : tables) {
@@ -177,6 +185,8 @@ public class restaurantController {
      * @throws invalidNameException 
      */
     public String getFrequency() throws invalidNameException {
+    	if(this.model == null || this.model.dailyOrdersNameIndexer == null || this.model.mainMenuIndexer == null)
+        	return "";
         String s = "";
         s += "FREAQUENCY REPORT";
         s += "=================";
