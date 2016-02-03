@@ -26,7 +26,8 @@ public class restaurantView {
      * @return
      */
     public void setup(restaurantController Controller, restaurantModel Model) {
-        // TODO implement here
+       this.Controller=Controller;
+       this.Model=Model;
     }
 
     /**
@@ -34,8 +35,8 @@ public class restaurantView {
      * @param Model
      */
     public restaurantView(restaurantController Controller, restaurantModel Model) {
-        // TODO implement here
-    }
+    	this.setup(Controller, Model);    
+    	}
 
     /**
      * @return

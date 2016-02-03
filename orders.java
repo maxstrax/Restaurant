@@ -20,7 +20,7 @@ public class orders {
      */
     public orderItem getItem(Integer Index) {
         // TODO implement here
-        return null;
+     return items.get(Index);
     }
 
     /**
@@ -28,7 +28,7 @@ public class orders {
      */
     public Integer countItems() {
         // TODO implement here
-        return null;
+        return items.size();
     }
 
     /**
@@ -36,21 +36,21 @@ public class orders {
      * @return
      */
     public void addItem(orderItem Item) {
-        // TODO implement here
+        items.add(Item);
     }
 
     /**
      * @return
      */
     public void clearOrders() {
-        // TODO implement here
+    	items.clear();
     }
 
     /**
      * @return
      */
     public orders() {
-        // TODO implement here
+    	items = new ArrayList<orderItem> (); 
     }
 
 }

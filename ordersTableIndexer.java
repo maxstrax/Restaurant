@@ -18,7 +18,18 @@ public class ordersTableIndexer {
      * @return
      */
     public void create(orders dailyOrders) {
-        // TODO implement here
+    	this.tableOrders.clear(); //if we have previous values, clear them up. DEBUG INFO <- if it crushes here orderNames is not allocated with new
+    	int tableId;
+    	LinkedList<Integer> l = null;
+    	for(int i=0; i<dailyOrders.countItems(); i++) {
+    		tableId = dailyOrders.getItem(i).getTableId();
+    		if(tableOrders.containsKey(tableId)) {	// if key does not exist
+    			l = new LinkedList<Integer>();			//   create a new linkedlist
+    			tableOrders.put(tableId, l);		//   add it as the value to the key (order name)
+    		}
+    												// if key exists -> the list is allocated and initialized
+    		tableOrders.get(tableId).add(i);	//   add the new key at the end
+    	}
     }
 
     /**
@@ -26,8 +37,8 @@ public class ordersTableIndexer {
      * @return
      */
     public Set<Integer> getTableIds() {
-        // TODO implement here
-        return null;
+        return this.tableOrders.keySet();
+
     }
 
     /**
@@ -36,8 +47,8 @@ public class ordersTableIndexer {
      * @return
      */
     public Integer getOrdersCount(Integer tableId) {
-        // TODO implement here
-        return null;
+
+    	  return this.tableOrders.size();
     }
 
     /**
@@ -47,8 +58,15 @@ public class ordersTableIndexer {
      * @return
      */
     public Integer getIndexOf(Integer tableId, Integer OrderNo) throws invalidTableIdException, ArrayIndexOutOfBoundsException {
-        // TODO implement here
-        return null;
+        if(!this.tableOrders.containsKey(tableId))
+        	throw new invalidTableIdException(tableId);
+        else {
+        	List<Integer> indices = this.tableOrders.get(tableId);
+        	if(indices.size() <= OrderNo || OrderNo < 0)
+        		throw new ArrayIndexOutOfBoundsException(OrderNo);
+        	else
+        		return indices.get(OrderNo);
+        }
     }
 
     /**
@@ -56,7 +74,8 @@ public class ordersTableIndexer {
      * @param dailyOrders
      */
     public ordersTableIndexer(orders dailyOrders) {
-        // TODO implement here
+    	this.tableOrders = new HashMap<Integer, LinkedList<Integer>>(); //init our map
+    	this.create(dailyOrders);
     }
 
 }

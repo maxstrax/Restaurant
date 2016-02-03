@@ -32,7 +32,10 @@ public class orderItem {
      * @param Quantity
      */
     public orderItem(Integer TableId, String Name, Integer Quantity) {
-        // TODO implement here
+
+    	this.tableId=TableId;
+    	this.name=Name;
+    	this.quantity=Quantity;
     }
 
     /**
@@ -40,7 +43,7 @@ public class orderItem {
      * @return
      */
     public void setTable(Integer TableId) {
-        // TODO implement here
+    	this.tableId=TableId;
     }
 
     /**
@@ -48,23 +51,16 @@ public class orderItem {
      * @return
      */
     public void setName(String Name) {
-        // TODO implement here
+    	this.name=Name;
     }
 
-    /**
-     * @param Item 
-     * @return
-     */
-    public void setItem(menuItem Item) {
-        // TODO implement here
-    }
 
     /**
      * @param Quantity 
      * @return
      */
     public void setQuantity(Integer Quantity) {
-        // TODO implement here
+    	this.quantity=Quantity;
     }
 
     /**
@@ -72,7 +68,7 @@ public class orderItem {
      */
     public Integer getTableId() {
         // TODO implement here
-        return null;
+        return tableId;
     }
 
     /**
@@ -80,23 +76,16 @@ public class orderItem {
      */
     public String getName() {
         // TODO implement here
-        return "";
+        return name;
     }
 
-    /**
-     * @return
-     */
-    public menuItem getItem() {
-        // TODO implement here
-        return null;
-    }
-
+    
     /**
      * @return
      */
     public Integer getQuantity() {
         // TODO implement here
-        return null;
+        return quantity;
     }
 
 }

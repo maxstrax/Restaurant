@@ -28,16 +28,16 @@ public class AseGui extends JFrame implements ActionListener{
 	JButton search;
     JTextArea result;
     
-    public AseGui() {
+    public AseGui(restaurantController controller, restaurantModel model) {
         super("Order Details");
         this.setBounds(10, 50, 400, 300);
         
-	setDefaultCloseOperation(EXIT_ON_CLOSE);
-
+	    setDefaultCloseOperation(EXIT_ON_CLOSE);
         
         JPanel searchPanel = new JPanel();
         
-        searchPanel.add(new JLabel("Enter order number:"));   
+        searchPanel.add(new JLabel("Enter order number:"));
+        add(searchPanel);
   
         searchField = new JTextField(5);
 
@@ -48,6 +48,8 @@ public class AseGui extends JFrame implements ActionListener{
         search = new JButton("View Details");  
         searchPanel.add(search,BorderLayout.CENTER);
      
+        JPanel panel1 = new JPanel();
+        
         result.setEditable(false);
         searchPanel.add(result,BorderLayout.SOUTH);
         
