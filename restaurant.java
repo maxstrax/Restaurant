@@ -33,9 +33,9 @@ public class restaurant {
 	        model = new restaurantModel();
 	        controller = new restaurantController(model);
 	        view = new restaurantView(controller, model);
-			//controller.loadMenu("menu.txt");
-	        //controller.loadOrders("orders.txt");
-	        //controller.createIndexers();
+			controller.loadMenu("menu.txt");
+	        controller.loadOrders("orders.txt");
+	        controller.createIndexers();
 	        //controller.saveReport("report.txt");
 	        view.showGUI();
 		} catch (Exception e) {

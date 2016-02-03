@@ -7,12 +7,6 @@ import java.util.*;
 public class restaurantModel {
 
     /**
-     * Default constructor
-     */
-    public restaurantModel() {
-    }
-
-    /**
      * 
      */
     public menu mainMenu;
@@ -43,8 +37,9 @@ public class restaurantModel {
     /**
      * sets the indexers to Null and creates new objects for mainMenu and dailyOrders
      */
-    public void restaurantModel() {
-        // TODO implement here
+    public restaurantModel() {
+        this.dailyOrders = new orders();
+        this.mainMenu = new menu();
     }
 
 }

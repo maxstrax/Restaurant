@@ -57,12 +57,25 @@ public class restaurantController {
 			BufferedReader br = new BufferedReader(new FileReader(filename));
 			String[] ss = null;
 			int line = 0;
+			itemCategory c;
+			String s;
 			while(br.ready()) {
-				ss = br.readLine().split("|");
+				ss = br.readLine().split("\\|");
 				line++;
 				if(ss.length != 3)
 					throw new invalidFileFormatException(filename, line);
-				this.model.mainMenu.addItem(new menuItem(ss[0].trim(), Float.parseFloat(ss[1].trim()), itemCategory.valueOf(ss[2].trim())));
+				s = ss[2].trim();
+				if(s.toLowerCase().compareTo(itemCategory.Starter.name().toLowerCase()) == 0)
+					c = itemCategory.Starter;
+				else if(s.toLowerCase().compareTo(itemCategory.Main.name().toLowerCase()) == 0)
+					c = itemCategory.Main;
+				else if(s.toLowerCase().compareTo(itemCategory.Dessert.name().toLowerCase()) == 0)
+					c = itemCategory.Dessert;
+				else if(s.toLowerCase().compareTo(itemCategory.Drinks.name().toLowerCase()) == 0)
+					c = itemCategory.Drinks;
+				else
+					throw new invalidCategoryException();
+				this.model.mainMenu.addItem(new menuItem(ss[0].trim(), Float.parseFloat(ss[1].trim()), c));
 			}
 			br.close();
 		} catch (FileNotFoundException e) {
@@ -72,7 +85,7 @@ public class restaurantController {
 				throw (FileNotFoundException)e;
 			e.printStackTrace();
 		} catch (IllegalArgumentException e) {
-			throw new invalidCategoryException();
+			throw new invalidFileFormatException();
 		}
     }
 
@@ -90,7 +103,7 @@ public class restaurantController {
 			String[] ss = null;
 			int line = 0;
 			while(br.ready()) {
-				ss = br.readLine().split("|");
+				ss = br.readLine().split("\\|");
 				line++;
 				if(ss.length != 3)
 					throw new invalidFileFormatException(filename, line);
