@@ -17,8 +17,11 @@ public class menuIndexer {
      * @return
      */
     public Integer getIndexOf(String Name) throws invalidNameException {
-        // TODO implement here
-        return null;
+    	 if(!this.index.containsKey(Name))
+         	throw new invalidNameException(Name);
+         else {
+         	return index.get(Name);
+         }
     }
 
     /**
@@ -27,7 +30,16 @@ public class menuIndexer {
      * @return
      */
     public void create(menu mainMenu) {
-        // TODO implement here
+    	this.index.clear();
+    	String menuItemName;
+    	Integer l = null;
+    	for(int i=0; i<mainMenu.count(); i++) {
+    		menuItemName = mainMenu.getMenu(i).getName();
+    		if(!index.containsKey(menuItemName)) {
+    			index.put(menuItemName, l);		
+    		}											
+    		//index.get(menuItemName).add(i);
+    	}
     }
 
     /**
@@ -35,7 +47,8 @@ public class menuIndexer {
      * @param mainMenu
      */
     public menuIndexer(menu mainMenu) {
-        // TODO implement here
+    	this.index = new HashMap<String, Integer>(); //init our map
+    	this.create(mainMenu);
     }
 
     /**
@@ -43,8 +56,7 @@ public class menuIndexer {
      * @return
      */
     public Set<String> getNames() {
-        // TODO implement here
-        return null;
+    	return this.index.keySet();
     }
 
 }

@@ -19,16 +19,14 @@ public class menu {
      * @return
      */
     public menuItem getMenu(Integer Index) {
-        // TODO implement here
-        return null;
+    	return this.items.get(Index);
     }
 
     /**
      * @return
      */
     public Integer count() {
-        // TODO implement here
-        return null;
+    	return this.items.size();
     }
 
     /**
@@ -36,21 +34,21 @@ public class menu {
      * @return
      */
     public void addItem(menuItem Items) {
-        // TODO implement here
+    	this.items.add(Items);
     }
 
     /**
      * @return
      */
     public void clearMenu() {
-        // TODO implement here
+    	this.items.clear();
     }
 
     /**
      * 
      */
     public menu() {
-        // TODO implement here
+    	this.items = new ArrayList<menuItem> (); 
     }
 
 }

@@ -111,6 +111,9 @@ public class restaurantModel {
     public restaurantModel() {
         this.dailyOrders = new orders();
         this.mainMenu = new menu();
+        this.dailyOrdersTableIndexer = new ordersTableIndexer(dailyOrders);
+        this.dailyOrdersNameIndexer = new ordersNameIndexer(dailyOrders);
+        this.mainMenuIndexer = new menuIndexer(mainMenu);
     }
     
     
