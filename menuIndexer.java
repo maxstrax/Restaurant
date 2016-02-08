@@ -31,14 +31,10 @@ public class menuIndexer {
      */
     public void create(menu mainMenu) {
     	this.index.clear();
-    	String menuItemName;
-    	Integer l = null;
+    	String menuItemName = null;
     	for(int i=0; i<mainMenu.count(); i++) {
     		menuItemName = mainMenu.getMenu(i).getName();
-    		if(!index.containsKey(menuItemName)) {
-    			index.put(menuItemName, l);		
-    		}											
-    		//index.get(menuItemName).add(i);
+    		index.put(menuItemName, i);		
     	}
     }
 

@@ -52,7 +52,6 @@ public class menuItem {
      * @return
      */
     public String getName() {
-        // TODO implement here
         return name;
     }
 
@@ -60,7 +59,6 @@ public class menuItem {
      * @return
      */
     public Float getPrice() {
-        // TODO implement here
         return price;
     }
 
@@ -68,7 +66,6 @@ public class menuItem {
      * @return
      */
     public itemCategory getCategory() {
-        // TODO implement here
         return category;
     }
 
@@ -78,7 +75,9 @@ public class menuItem {
      * @param Category
      */
     public menuItem(String Name, Float Price, itemCategory Category) {
-        // TODO implement here
+    	this.price=Price;
+    	this.name=Name;
+    	this.category=Category;
     }
 
 }
