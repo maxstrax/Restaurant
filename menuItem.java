@@ -29,7 +29,7 @@ public class menuItem {
      * @return
      */
     public void setName(String Name) {
-        // TODO implement here
+    	this.name = Name;
     }
 
     /**
@@ -37,7 +37,7 @@ public class menuItem {
      * @return
      */
     public void setPrice(Float Price) {
-        // TODO implement here
+        this.price = Price;
     }
 
     /**
@@ -45,7 +45,7 @@ public class menuItem {
      * @return
      */
     public void setCategory(itemCategory Category) {
-        // TODO implement here
+        this.category = Category;
     }
 
     /**
@@ -53,7 +53,7 @@ public class menuItem {
      */
     public String getName() {
         // TODO implement here
-        return "";
+        return name;
     }
 
     /**
@@ -61,7 +61,7 @@ public class menuItem {
      */
     public Float getPrice() {
         // TODO implement here
-        return null;
+        return price;
     }
 
     /**
@@ -69,7 +69,7 @@ public class menuItem {
      */
     public itemCategory getCategory() {
         // TODO implement here
-        return null;
+        return category;
     }
 
     /**

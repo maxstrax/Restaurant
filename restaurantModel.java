@@ -34,12 +34,85 @@ public class restaurantModel {
 
 
 
-    /**
+    public menu getMainMenu() {
+		return mainMenu;
+	}
+
+
+
+
+	public void setMainMenu(menu mainMenu) {
+		this.mainMenu = mainMenu;
+	}
+
+
+
+
+	public menuIndexer getMainMenuIndexer() {
+		return mainMenuIndexer;
+	}
+
+
+
+
+	public void setMainMenuIndexer(menuIndexer mainMenuIndexer) {
+		this.mainMenuIndexer = mainMenuIndexer;
+	}
+
+
+
+
+	public orders getDailyOrders() {
+		return dailyOrders;
+	}
+
+
+
+
+	public void setDailyOrders(orders dailyOrders) {
+		this.dailyOrders = dailyOrders;
+	}
+
+
+
+
+	public ordersTableIndexer getDailyOrdersTableIndexer() {
+		return dailyOrdersTableIndexer;
+	}
+
+
+
+
+	public void setDailyOrdersTableIndexer(
+			ordersTableIndexer dailyOrdersTableIndexer) {
+		this.dailyOrdersTableIndexer = dailyOrdersTableIndexer;
+	}
+
+
+
+
+	public ordersNameIndexer getDailyOrdersNameIndexer() {
+		return dailyOrdersNameIndexer;
+	}
+
+
+
+
+	public void setDailyOrdersNameIndexer(ordersNameIndexer dailyOrdersNameIndexer) {
+		this.dailyOrdersNameIndexer = dailyOrdersNameIndexer;
+	}
+
+
+
+
+	/**
      * sets the indexers to Null and creates new objects for mainMenu and dailyOrders
      */
     public restaurantModel() {
         this.dailyOrders = new orders();
         this.mainMenu = new menu();
     }
+    
+    
 
 }
