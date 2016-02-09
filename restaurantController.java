@@ -5,6 +5,7 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.LinkedList;
 import java.util.Set;
 import java.util.TreeSet;
 
@@ -41,6 +42,7 @@ public class restaurantController {
         this.model.dailyOrdersNameIndexer = new ordersNameIndexer(this.model.dailyOrders);
         this.model.dailyOrdersTableIndexer = new ordersTableIndexer(this.model.dailyOrders);
         this.model.mainMenuIndexer = new menuIndexer(this.model.mainMenu);
+        this.model.mainMenuCategoryIndexer = new menuCategoryIndexer(this.model.mainMenu);
     }
 
     /**
@@ -125,6 +127,15 @@ public class restaurantController {
 		}
     }
 
+    private String calculateTabs(String toPrint, int count) {
+    	int tab_count = 0;
+    	String tab = "\t";
+    	while(toPrint.length() + tab_count * 4 < 24) {
+    		tab_count++;
+    		tab += "\t";
+    	}
+    	return tab;
+    }
     /**
      * Returns a String with the bill of a specified tableId
      * @param tableId 
@@ -144,21 +155,13 @@ public class restaurantController {
         orderItem oi;
         menuItem mi;
         int orderindex, menuindex, count = this.model.dailyOrdersTableIndexer.getOrdersCount(tableId);
-        String tab = "";
-        int tab_count = 0;
         for(int i=0; i<count; i++) {
 			orderindex = this.model.dailyOrdersTableIndexer.getIndexOf(tableId, i);
         	oi = this.model.dailyOrders.getItem(orderindex);
         	menuindex = this.model.mainMenuIndexer.getIndexOf(oi.getName());
         	mi = this.model.mainMenu.getMenu(menuindex);
         	price = (oi.getQuantity() * mi.getPrice());
-        	tab_count = 0;
-        	tab = "\t";
-        	while(mi.getName().length() + tab_count * 4 < 24) {
-        		tab_count++;
-        		tab += "\t";
-        	}
-        	s += mi.getName() + tab + oi.getQuantity() + " * " + mi.getPrice() + " = " + price + "\n";
+        	s += mi.getName() + calculateTabs(mi.getName(), 24) + oi.getQuantity() + " * " + mi.getPrice() + " = " + price + "\n";
         	price_total += price;
         }
         s += "\n=====\n";
@@ -196,12 +199,12 @@ public class restaurantController {
     	if(this.model == null || this.model.dailyOrdersNameIndexer == null || this.model.mainMenuIndexer == null)
         	return "";
         String s = "";
-        s += "FREAQUENCY REPORT\n";
-        s += "=================\n";
+        s += "FREQUENCY REPORT\n";
+        s += "================\n";
         for(String name : new TreeSet<String>(this.model.dailyOrdersNameIndexer.getNames())) {
         	if(!this.model.mainMenuIndexer.getNames().contains(name))
         		throw new invalidNameException(name);
-        	s += name + "\t" + this.model.dailyOrdersNameIndexer.getOrdersCount(name) + "\n";
+        	s += name + calculateTabs(name, 24) + this.model.dailyOrdersNameIndexer.getOrdersCount(name) + "\n";
         }
         s += "\nDISHES NOT ORDERED\n";
         s += "==================\n";
@@ -211,17 +214,43 @@ public class restaurantController {
         return s;
     }
 
+    
+    private String getMenuItem(int index) {
+    	String ret = "";
+    	menuItem mi = this.model.mainMenu.getMenu(index);
+    	ret += mi.getName() + calculateTabs(mi.getName(), 24) + mi.getPrice();
+    	return ret;
+    }
+    private String printMenuItems(itemCategory category) throws invalidCategoryException {
+    	String s = "";
+    	s += "\n" + category.toString().toUpperCase() + "\n";
+    	int count = this.model.mainMenuCategoryIndexer.getCategoryCount(category);
+    	for(int i =0; i<count; i++)
+    		s += "\t" + getMenuItem(this.model.mainMenuCategoryIndexer.getIndexOf(category, i)) + "\n";
+    	return s;
+    }
     /**
      * returns a String with the Menu
      * @return
+     * @throws invalidCategoryException 
      */
-    public String getMenu() {
+    public String getMenu() throws invalidCategoryException {
         if(model == null)
         	return "";
         String ret = "MENU\n";
         ret += "====\n";
-        
-        //TODO: add the menu!
+        if(this.model.mainMenuCategoryIndexer.getCategories().contains(itemCategory.Starter)) {
+        	ret += printMenuItems(itemCategory.Starter);
+        }
+        if(this.model.mainMenuCategoryIndexer.getCategories().contains(itemCategory.Main)) {
+        	ret += printMenuItems(itemCategory.Main);
+        }
+        if(this.model.mainMenuCategoryIndexer.getCategories().contains(itemCategory.Dessert)) {
+        	ret += printMenuItems(itemCategory.Dessert);
+        }
+        if(this.model.mainMenuCategoryIndexer.getCategories().contains(itemCategory.Drinks)) {
+        	ret += printMenuItems(itemCategory.Drinks);
+        }
         
         
         return ret;
@@ -235,8 +264,9 @@ public class restaurantController {
      * @throws invalidNameException 
      * @throws invalidTableIdException 
      * @throws ArrayIndexOutOfBoundsException 
+     * @throws invalidCategoryException 
      */
-    public void saveReport(String filename) throws IOException, invalidNameException, ArrayIndexOutOfBoundsException, invalidTableIdException {
+    public void saveReport(String filename) throws IOException, invalidNameException, ArrayIndexOutOfBoundsException, invalidTableIdException, invalidCategoryException {
         BufferedWriter bw = new BufferedWriter(new FileWriter(filename));
         bw.write(this.getMenu() + "\n");
         bw.write(this.getFrequency() + "\n");
@@ -250,7 +280,7 @@ public class restaurantController {
      */
     public float calculateDiscount(float toPay) {
         // TODO implement here
-        return (toPay > 10.0f)? 0.2f * toPay : 0.0f;
+        return (toPay > 10.0f)? 0.2f * (toPay - 10.0f) : 0.0f;
     }
 
     /**

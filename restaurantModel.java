@@ -16,6 +16,7 @@ public class restaurantModel {
      */
     public menuIndexer mainMenuIndexer;
 
+    public menuCategoryIndexer mainMenuCategoryIndexer;
     /**
      * 
      */
@@ -115,6 +116,7 @@ public class restaurantModel {
         this.dailyOrdersTableIndexer = null;
         this.dailyOrdersNameIndexer = null;
         this.mainMenuIndexer = null;
+        this.mainMenuCategoryIndexer = null;
     }
     
     
