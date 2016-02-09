@@ -45,10 +45,13 @@ public class ordersTableIndexer {
      * Returns the amount of orders given for a tableId
      * @param tableId 
      * @return
+     * @throws invalidTableIdException 
      */
-    public Integer getOrdersCount(Integer tableId) {
-
-    	  return this.tableOrders.size();
+    public Integer getOrdersCount(Integer tableId) throws invalidTableIdException {
+    	if(this.tableOrders.containsKey(tableId))
+    		return this.tableOrders.get(tableId).size();
+    	else
+    		throw new invalidTableIdException(tableId);
     }
 
     /**

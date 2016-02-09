@@ -139,24 +139,32 @@ public class restaurantController {
         String s;
         s = "TABLE SUMMARY\n";
         s += "=============\n";
-        s += "TABLE " + tableId;
+        s += "TABLE " + tableId + "\n";
         float price_total = 0.0f, discount = 0.0f, price;
         orderItem oi;
         menuItem mi;
         int orderindex, menuindex, count = this.model.dailyOrdersTableIndexer.getOrdersCount(tableId);
+        String tab = "";
+        int tab_count = 0;
         for(int i=0; i<count; i++) {
 			orderindex = this.model.dailyOrdersTableIndexer.getIndexOf(tableId, i);
         	oi = this.model.dailyOrders.getItem(orderindex);
         	menuindex = this.model.mainMenuIndexer.getIndexOf(oi.getName());
         	mi = this.model.mainMenu.getMenu(menuindex);
         	price = (oi.getQuantity() * mi.getPrice());
-        	s += mi.getName() + "\t" + oi.getQuantity() + " * " + mi.getPrice() + " = " + price + "\n";
+        	tab_count = 0;
+        	tab = "\t";
+        	while(mi.getName().length() + tab_count * 4 < 24) {
+        		tab_count++;
+        		tab += "\t";
+        	}
+        	s += mi.getName() + tab + oi.getQuantity() + " * " + mi.getPrice() + " = " + price + "\n";
         	price_total += price;
         }
-        s += "\n=====";
-        s += "Total for this table :\t\t" + price_total;
+        s += "\n=====\n";
+        s += "Total for this table :\t\t" + price_total + "\n";
         discount = this.calculateDiscount(price_total);
-        s += "Discount :\t\t\t\t" + discount;
+        s += "Discount :\t\t\t\t\t" + discount + "\n";
         s += "Discounted total :\t\t\t" + (price_total - discount) + "\n";
         return s;
     }
@@ -188,15 +196,15 @@ public class restaurantController {
     	if(this.model == null || this.model.dailyOrdersNameIndexer == null || this.model.mainMenuIndexer == null)
         	return "";
         String s = "";
-        s += "FREAQUENCY REPORT";
-        s += "=================";
+        s += "FREAQUENCY REPORT\n";
+        s += "=================\n";
         for(String name : new TreeSet<String>(this.model.dailyOrdersNameIndexer.getNames())) {
         	if(!this.model.mainMenuIndexer.getNames().contains(name))
         		throw new invalidNameException(name);
         	s += name + "\t" + this.model.dailyOrdersNameIndexer.getOrdersCount(name) + "\n";
         }
-        s += "\nDISHES NOT ORDERED";
-        s += "==================";
+        s += "\nDISHES NOT ORDERED\n";
+        s += "==================\n";
         for(String name : new TreeSet<String>(this.model.mainMenuIndexer.getNames()))
         	if(!this.model.dailyOrdersNameIndexer.getNames().contains(name))
         		s += name + "\n";
@@ -230,8 +238,8 @@ public class restaurantController {
      */
     public void saveReport(String filename) throws IOException, invalidNameException, ArrayIndexOutOfBoundsException, invalidTableIdException {
         BufferedWriter bw = new BufferedWriter(new FileWriter(filename));
-        bw.write(this.getMenu());
-        bw.write(this.getFrequency());
+        bw.write(this.getMenu() + "\n");
+        bw.write(this.getFrequency() + "\n");
         bw.write(this.getBills());
         bw.close();
     }
