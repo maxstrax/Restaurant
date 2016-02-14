@@ -7,7 +7,7 @@ public class invalidNameException extends Exception {
 	private static final long serialVersionUID = 1L;
 
 	public invalidNameException(String name) {
-		super("The requested name does not exist, or  is empty: " + name);
+		super("The requested name does not exist, or it is empty: " + name);
 	}
 
 	public invalidNameException() {
