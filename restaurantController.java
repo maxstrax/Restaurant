@@ -165,10 +165,10 @@ public class restaurantController {
         	price_total += price;
         }
         s += "\n=====\n";
-        s += "Total for this table :\t\t" + price_total + "\n";
+        s += "Total for this table :\t\t\t\t" + price_total + "\n";
         discount = this.calculateDiscount(price_total);
         s += "Discount :\t\t\t\t\t" + discount + "\n";
-        s += "Discounted total :\t\t\t" + (price_total - discount) + "\n";
+        s += "Discounted total :\t\t\t\t" + (price_total - discount) + "\n";
         return s;
     }
 
