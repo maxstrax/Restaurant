@@ -130,7 +130,7 @@ public class restaurantController {
     private String calculateTabs(String toPrint, int count) {
     	int tab_count = 0;
     	String tab = "\t";
-    	while(toPrint.length() + tab_count * 4 < 24) {
+    	while(toPrint.length() + tab_count * 4 < count) {
     		tab_count++;
     		tab += "\t";
     	}
@@ -165,10 +165,10 @@ public class restaurantController {
         	price_total += price;
         }
         s += "\n=====\n";
-        s += "Total for this table :\t\t\t\t" + price_total + "\n";
+        s += "Total for this table :\t\t" + price_total + "\n";
         discount = this.calculateDiscount(price_total);
         s += "Discount :\t\t\t\t\t" + discount + "\n";
-        s += "Discounted total :\t\t\t\t" + (price_total - discount) + "\n";
+        s += "Discounted total :\t\t\t" + (price_total - discount) + "\n";
         return s;
     }
 
@@ -218,7 +218,7 @@ public class restaurantController {
     private String getMenuItem(int index) {
     	String ret = "";
     	menuItem mi = this.model.mainMenu.getMenu(index);
-    	ret += mi.getName() + calculateTabs(mi.getName(), 24) + mi.getPrice();
+    	ret += mi.getName() + calculateTabs(mi.getName(), 20) + mi.getPrice();
     	return ret;
     }
     private String printMenuItems(itemCategory category) throws invalidCategoryException {

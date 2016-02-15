@@ -1,6 +1,4 @@
 
-import java.util.*;
-
 import javax.swing.SwingUtilities;
 
 /**
@@ -36,13 +34,12 @@ public class restaurantView {
      */
     public restaurantView(restaurantController Controller, restaurantModel Model) {
     	this.setup(Controller, Model);    
-    	}
+    }
 
     /**
      * @return
      */
     public void showGUI() {
-
     	SwingUtilities.invokeLater(new Runnable() {
     		 
             @Override

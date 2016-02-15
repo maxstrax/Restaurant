@@ -1,29 +1,24 @@
 import java.awt.BorderLayout;
-import java.awt.FlowLayout;
-import java.awt.GridLayout;
+import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.ArrayList;
-import java.util.Vector;
-import java.util.regex.PatternSyntaxException;
- 
-import javax.swing.ButtonGroup;
+
 import javax.swing.JButton;
-import javax.swing.JCheckBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JRadioButton;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
-import javax.swing.RowFilter;
-import javax.swing.SwingUtilities;
-import javax.swing.table.TableModel;
 
 
  
 public class AseGui extends JFrame implements ActionListener{
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	
 	JTextField searchField;
 	JButton search;
     JTextArea result;
@@ -54,6 +49,9 @@ public class AseGui extends JFrame implements ActionListener{
         JPanel panel1 = new JPanel();
         
         result.setEditable(false);
+        //Fix the spacing issues
+        result.setFont(new Font("monospaced", Font.PLAIN, 12)); //ensure each character has a fixed size
+        result.setTabSize(4); //ensure tabs match the file output
         searchPanel.add(result,BorderLayout.SOUTH);
         
         add(searchPanel);
@@ -75,7 +73,7 @@ public class AseGui extends JFrame implements ActionListener{
 				e1.printStackTrace();
 			}
 	    	
-}
+    	}
 	}
 
     
