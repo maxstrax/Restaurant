@@ -27,7 +27,7 @@ public class AseGui extends JFrame implements ActionListener{
     
     public AseGui(restaurantController controller, restaurantModel model) {
         super("Order Details");
-        this.setBounds(100, 50, 560, 340);
+        this.setBounds(100, 50, 360, 340);
         this.controller=controller;
         this.model=model;
 	    setDefaultCloseOperation(EXIT_ON_CLOSE);
@@ -63,13 +63,13 @@ public class AseGui extends JFrame implements ActionListener{
 	public void actionPerformed(ActionEvent e) {
  
     	if(e.getSource() == search){
-	    	result.setText("A table with that number is not in the orders list");
 	    	String text = searchField.getText();
 	    	try {
 	    		result.setText(controller.getBill(Integer.parseInt(text)));
 			} catch (ArrayIndexOutOfBoundsException | invalidTableIdException
 					| invalidNameException e1) {
 				// TODO Auto-generated catch block
+				result.setText("A table with that number is not in the orders list");
 				e1.printStackTrace();
 			}
 	    	
