@@ -1,0 +1,12 @@
+3 | Roast Beef | 2
+1 | Smoked Salmon | 1
+1 | Carrot Soup | 1
+1 | Roast Beef | 1
+3 | Chocolate Cake | 2
+2 | Carrot Soup | 2
+2 |  | 2
+2 | Coffee and Mints | 1
+3 | Coffee and Mints | 2
+3 | Chicken Balerno | 2
+3 | Smoked Salmon | 2
+1 | Coffee and Mints | 2
