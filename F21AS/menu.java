@@ -1,3 +1,4 @@
+package F21AS;
 
 import java.util.*;
 
@@ -18,8 +19,10 @@ public class menu {
      * @param Index 
      * @return
      */
-    public menuItem getMenu(Integer Index) {
-    	return this.items.get(Index);
+    public menuItem getMenu(Integer Index) throws ArrayIndexOutOfBoundsException {
+    	if(Index < items.size())
+    		return this.items.get(Index);
+    	throw new ArrayIndexOutOfBoundsException(Index);
     }
 
     /**

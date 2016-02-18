@@ -1,6 +1,4 @@
-
-import java.util.*;
-
+package F21AS;
 /**
  * Holds all the data for one order
  */

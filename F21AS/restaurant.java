@@ -1,3 +1,4 @@
+package F21AS;
 /**
  * The main class of the application
  */

@@ -1,3 +1,4 @@
+package F21AS;
 
 import java.util.*;
 
@@ -18,9 +19,11 @@ public class orders {
      * @param Index 
      * @return
      */
-    public orderItem getItem(Integer Index) {
-        // TODO implement here
-     return this.items.get(Index);
+    public orderItem getItem(Integer Index) throws ArrayIndexOutOfBoundsException {
+    	if(Index < items.size())
+    		return this.items.get(Index);
+    	throw new ArrayIndexOutOfBoundsException(Index);
+
     }
 
     /**

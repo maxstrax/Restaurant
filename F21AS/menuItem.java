@@ -1,6 +1,4 @@
-
-import java.util.*;
-
+package F21AS;
 /**
  * Holds the data for one menu item.
  */

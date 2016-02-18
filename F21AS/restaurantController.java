@@ -1,12 +1,10 @@
+package F21AS;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.util.LinkedList;
-import java.util.Set;
 import java.util.TreeSet;
 
 /**
@@ -49,11 +47,11 @@ public class restaurantController {
      * Loads the menu text file and populates the mainMenu object of the model
      * @param filename 
      * @return
-     * @throws FileNotFoundException 
      * @throws invalidFileFormatException 
      * @throws invalidCategoryException 
+     * @throws IOException 
      */
-    public void loadMenu(String filename) throws FileNotFoundException, invalidFileFormatException, invalidCategoryException {
+    public void loadMenu(String filename) throws invalidFileFormatException, invalidCategoryException, IOException {
     	if(model == null)
         	return;
         try {
@@ -82,13 +80,7 @@ public class restaurantController {
 				this.model.mainMenu.addItem(new menuItem(ss[0].trim(), Float.parseFloat(ss[1].trim()), c));
 			}
 			br.close();
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
-			if(e instanceof FileNotFoundException)
-				throw (FileNotFoundException)e;
-			e.printStackTrace();
-		} catch (IllegalArgumentException e) {
+		} catch (IllegalArgumentException e) { ///all other exception types must be returned as is
 			throw new invalidFileFormatException();
 		}
     }
@@ -98,33 +90,40 @@ public class restaurantController {
      * @param filename 
      * @return
      * @throws invalidFileFormatException 
-     * @throws FileNotFoundException 
+     * @throws IOException 
+     * @throws invalidNameException 
+     * @throws invalidTableIdException 
      */
-    public void loadOrders(String filename) throws invalidFileFormatException, FileNotFoundException {
+    public void loadOrders(String filename) throws invalidFileFormatException, IOException, invalidNameException, invalidTableIdException {
     	if(model == null)
         	return;
-        try {
-			@SuppressWarnings("resource")
-			BufferedReader br = new BufferedReader(new FileReader(filename));
-			String[] ss = null;
-			int line = 0;
-			while(br.ready()) {
-				ss = br.readLine().split("\\|");
-				line++;
-				if(ss.length != 3)
-					throw new invalidFileFormatException(filename, line);
-				this.model.dailyOrders.addItem(new orderItem(Integer.parseInt(ss[0].trim()), ss[1].trim(), Integer.parseInt(ss[2].trim())));
-			}
-			br.close();
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
-			if(e instanceof FileNotFoundException)
-				throw (FileNotFoundException)e;
-			e.printStackTrace();
-		} catch (IllegalArgumentException e) {
-			e.printStackTrace();
+		@SuppressWarnings("resource")
+		BufferedReader br = new BufferedReader(new FileReader(filename));
+		String[] ss = null;
+		int line = 0;
+		int tableId, quantity;
+		String name;
+		while(br.ready()) {
+			ss = br.readLine().split("\\|");
+			line++;
+			if(ss.length != 3)
+				throw new invalidFileFormatException(filename, line);
+	        try {
+	        	tableId = Integer.parseInt(ss[0].trim());
+	        } catch (IllegalArgumentException e) {
+	        	throw new invalidTableIdException();
+	        }
+			name = ss[1].trim();
+			if(name.length() == 0)
+				throw new invalidNameException(name);
+			try {
+				quantity = Integer.parseInt(ss[2].trim());
+			} catch (IllegalArgumentException e) {
+	        	throw new invalidTableIdException();
+	        }
+			this.model.dailyOrders.addItem(new orderItem(tableId, name, quantity));
 		}
+		br.close();
     }
 
     private String calculateTabs(String toPrint, int count) {
@@ -183,8 +182,7 @@ public class restaurantController {
     	if(model == null || this.model.dailyOrdersTableIndexer == null)
         	return "";
         String s = "";
-        Set<Integer> tables = this.model.dailyOrdersTableIndexer.getTableIds();
-        for(int tableId : tables) {
+        for(int tableId : new TreeSet<Integer>(this.model.dailyOrdersTableIndexer.getTableIds())) {
         	s += this.getBill(tableId) + "\n";
         }
         return s.substring(0, s.length() - 2);
