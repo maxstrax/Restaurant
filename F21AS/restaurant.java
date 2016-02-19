@@ -34,8 +34,8 @@ public class restaurant {
 	        model = new restaurantModel();
 	        controller = new restaurantController(model);
 	        view = new restaurantView(controller, model);
-			controller.loadMenu("./menu.txt");
-	        controller.loadOrders("./orders.txt");
+			controller.loadMenu("./menu-initial.txt");
+	        controller.loadOrders("./orders-initial.txt");
 	        controller.createIndexers();
 	        controller.saveReport("report.txt");
 	        view.showGUI();
