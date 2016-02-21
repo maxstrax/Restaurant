@@ -3,6 +3,7 @@ package tests;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;
 
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -24,15 +25,23 @@ public class ordersTableIndexerTest {
 	public void testGetIndexOf() {
 		ordersTableIndexer oti = new ordersTableIndexer(o);
 		try {
-			assertEquals((Integer)1, oti.getIndexOf(1,2));
+			assertEquals((Integer)1, oti.getIndexOf(1, 0));
 		} catch (invalidTableIdException e) {
 			fail("InvalidTableIdException thrown when it should not");
 		}
 		try {
-			oti.getIndexOf(1,2);
+			oti.getIndexOf(2,2);
 			fail("InvalidTableIdException not thrown");
 		} catch (invalidTableIdException e) {
 			//success!
+		}
+		try {
+			oti.getIndexOf(1,2);
+			fail("ArrayIndexOutOfBoundsException not thrown");
+		} catch (ArrayIndexOutOfBoundsException e) {
+			//success!
+		} catch (invalidTableIdException e) {
+			fail("Was expecting ArrayIndexOutOfBoundsException, not invalidTableIdException");
 		}
 		
 	}
@@ -45,10 +54,15 @@ public class ordersTableIndexerTest {
 			fail("InvalidTableIdException thrown when it should not");
 		}
 		try {
-			oti.getOrdersCount(1);
+			oti.getOrdersCount(2);
 			fail("InvalidTableIdException not thrown");
 		} catch (invalidTableIdException e) {
 			//success!
 		}
 	}
+	@After
+	public void tearDown() throws Exception {
+		this.o.clearOrders();
+	}
+
 }
