@@ -1,12 +1,30 @@
-3 | Roast Beef | 2
-1 | Smoked Salmon | 1
+1 | Smoked Salmon | 3
 1 | Carrot Soup | 1
+1 | Chicken Balerno | 1
 1 | Roast Beef | 1
-3 | Chocolate Cake | 2
-2 | Carrot Soup | 2
-2 |  | 2
-2 | Coffee and Mints | 1
-3 | Coffee and Mints | 2
-3 | Chicken Balerno | 2
-3 | Smoked Salmon | 2
+1 | Pizza Americana | 2 
+1 | Chocolate gateau | 2
 1 | Coffee and Mints | 2
+1 | Margarita lemon | 2
+2 | Smoked Salmon | 2
+2 | Chicken Balerno | 1
+2 | Roast Beef | 1
+2 | Coffee and Mints | 2
+3 | Pizza Americana | 1
+4 | Chocolate Cake | 0
+5 | Carrot Soup | 2
+5 | Chicken Balerno | 1
+5 | Roast Beef | 1
+6 | Smoked Salmon | 2
+6 | Carrot Soup | 5
+6 | Chicken Balerno | 3
+6 | Roast Beef | 2
+6 | Pizza Americana | 1
+6 | Chocolate gateau | 3
+6 | Chocolate Cake | -1
+6 | Margarita lemon | 7
+6 | Cosmopolitan | 7
+7 | Smoked Salmon | 3
+7 | Carrot Soup | 4 
+7 | Chicken Balerno | 2
+7 | Roast Beef | 5

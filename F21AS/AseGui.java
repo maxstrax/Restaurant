@@ -47,7 +47,7 @@ public class AseGui extends JFrame implements ActionListener{
         search = new JButton("View details of bill");  
         searchPanel.add(search,BorderLayout.CENTER);
      
-        JPanel panel1 = new JPanel();
+        //JPanel panel1 = new JPanel();
         
         result.setEditable(false);
         //Fix the spacing issues
@@ -72,6 +72,9 @@ public class AseGui extends JFrame implements ActionListener{
 				// TODO Auto-generated catch block
 				result.setText("A table with that number is not in the orders list");
 				e1.printStackTrace();
+			} catch (invalidPriceException pe) {
+				result.setText("An unexpected calculation error occured");
+				pe.printStackTrace();
 			}
 	    	
     	}

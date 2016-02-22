@@ -142,8 +142,9 @@ public class restaurantController {
      * @throws invalidTableIdException 
      * @throws ArrayIndexOutOfBoundsException 
      * @throws invalidNameException 
+     * @throws invalidPriceException 
      */
-    public String getBill(Integer tableId) throws ArrayIndexOutOfBoundsException, invalidTableIdException, invalidNameException {
+    public String getBill(Integer tableId) throws ArrayIndexOutOfBoundsException, invalidTableIdException, invalidNameException, invalidPriceException {
     	if(model == null || this.model.dailyOrdersTableIndexer == null || this.model.mainMenuIndexer == null)
         	return "";
         String s;
@@ -160,14 +161,15 @@ public class restaurantController {
         	menuindex = this.model.mainMenuIndexer.getIndexOf(oi.getName());
         	mi = this.model.mainMenu.getMenu(menuindex);
         	price = (oi.getQuantity() * mi.getPrice());
-        	s += mi.getName() + calculateTabs(mi.getName(), 24) + oi.getQuantity() + " * " + mi.getPrice() + " = " + price + "\n";
+        	s += mi.getName() + calculateTabs(mi.getName(), 24) + oi.getQuantity() + " * " + String.format("%2.2f", mi.getPrice()) + " = " + price + "\n";
         	price_total += price;
         }
         s += "\n=====\n";
-        s += "Total for this table :\t\t" + price_total + "\n";
+        s += "Total for this table :\t\t" + String.format("%.2f",price_total) + "\n";
         discount = restaurantController.calculateDiscount(price_total);
-        s += "Discount :\t\t\t\t\t" + discount + "\n";
-        s += "Discounted total :\t\t\t" + (price_total - discount) + "\n";
+        s += "Discount :\t\t\t\t\t" + String.format("%.2f", discount) + "\n";
+        float total = (price_total - discount);
+        s += "Discounted total :\t\t\t" + String.format("%.2f", total) + "\n";
         return s;
     }
 
@@ -177,14 +179,20 @@ public class restaurantController {
      * @throws invalidNameException 
      * @throws invalidTableIdException 
      * @throws ArrayIndexOutOfBoundsException 
+     * @throws invalidPriceException 
      */
-    public String getBills() throws ArrayIndexOutOfBoundsException, invalidTableIdException, invalidNameException {
+    public String getBills() throws ArrayIndexOutOfBoundsException, invalidTableIdException, invalidNameException, invalidPriceException {
     	if(model == null || this.model.dailyOrdersTableIndexer == null)
         	return "";
-        String s = "";
+        String s = "", p;
+        float price = 0;
         for(int tableId : new TreeSet<Integer>(this.model.dailyOrdersTableIndexer.getTableIds())) {
         	s += this.getBill(tableId) + "\n";
+        	p = s.substring(s.lastIndexOf("Discounted total :\t\t\t", s.length()) + "Discounted total :\t\t\t".length(),
+        			s.length());
+        	price += Float.parseFloat(p.replace(',', '.'));
         }
+        s += "Grant Total : \t\t\t\t" + price + "\n";
         return s.substring(0, s.length() - 2);
     }
 
@@ -199,10 +207,14 @@ public class restaurantController {
         String s = "";
         s += "FREQUENCY REPORT\n";
         s += "================\n";
+        int quantity;
         for(String name : new TreeSet<String>(this.model.dailyOrdersNameIndexer.getNames())) {
         	if(!this.model.mainMenuIndexer.getNames().contains(name))
         		throw new invalidNameException(name);
-        	s += name + calculateTabs(name, 24) + this.model.dailyOrdersNameIndexer.getOrdersCount(name) + "\n";
+        	quantity = 0;
+        	for(int i=0; i<this.model.dailyOrdersNameIndexer.getOrdersCount(name); i++)
+        		quantity += this.model.dailyOrders.getItem(this.model.dailyOrdersNameIndexer.getIndexOf(name, i)).getQuantity();
+        	s += name + calculateTabs(name, 24) + quantity + "\n";
         }
         s += "\nDISHES NOT ORDERED\n";
         s += "==================\n";
@@ -255,6 +267,21 @@ public class restaurantController {
     }
 
     /**
+     * Creates the report of the day
+     * @param filename 
+     * @return
+     * @throws IOException 
+     * @throws invalidNameException 
+     * @throws invalidTableIdException 
+     * @throws ArrayIndexOutOfBoundsException 
+     * @throws invalidCategoryException 
+     * @throws invalidPriceException 
+     */
+    public String createReport() throws IOException, invalidNameException, ArrayIndexOutOfBoundsException, invalidTableIdException, invalidCategoryException, invalidPriceException {
+    	return this.getMenu() + "\n"+ this.getFrequency() + "\n" + this.getBills();
+    }
+
+    /**
      * Writes a text file with the report of the day
      * @param filename 
      * @return
@@ -263,21 +290,22 @@ public class restaurantController {
      * @throws invalidTableIdException 
      * @throws ArrayIndexOutOfBoundsException 
      * @throws invalidCategoryException 
+     * @throws invalidPriceException 
      */
-    public void saveReport(String filename) throws IOException, invalidNameException, ArrayIndexOutOfBoundsException, invalidTableIdException, invalidCategoryException {
+    public void saveReport(String filename) throws IOException, invalidNameException, ArrayIndexOutOfBoundsException, invalidTableIdException, invalidCategoryException, invalidPriceException {
         BufferedWriter bw = new BufferedWriter(new FileWriter(filename));
-        bw.write(this.getMenu() + "\n");
-        bw.write(this.getFrequency() + "\n");
-        bw.write(this.getBills());
+        bw.write(this.createReport());
         bw.close();
     }
 
     /**
      * @param toPay 
      * @return
+     * @throws invalidPriceException 
      */
-    public static float calculateDiscount(float toPay) {
-        // TODO implement here
+    public static float calculateDiscount(float toPay) throws invalidPriceException {
+    	if(toPay < 0.0)
+    		throw new invalidPriceException(toPay);
         return (toPay > 10.0f)? 0.2f * (toPay - 10.0f) : 0.0f;
     }
 

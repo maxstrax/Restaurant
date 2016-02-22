@@ -1,6 +1,10 @@
 Smoked Salmon | 6.00 | Starter
+Carrot Soup | 3.50 | Starter
 Chicken Balerno | 9.00 | Main
 Roast Beef | 10.00 | Main
+Pizza Americana | 10.20 | Main
+Chocolate gateau | 4.00 | Dessert
 Chocolate Cake | 4.50 | Dessert
-| 2.50 | Drinks
-Carrot Soup | 3.50 | Starter
+Coffee and Mints | 2.50 | Drinks
+Margarita lemon | 7.00 | Drinks
+Cosmopolitan | 7.00 | Drinks1

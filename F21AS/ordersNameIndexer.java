@@ -46,9 +46,12 @@ public class ordersNameIndexer {
      * Returns the amount of orders contain a specific name
      * @param Name 
      * @return
+     * @throws invalidNameException 
      */
-    public Integer getOrdersCount(String Name) {
-        return this.orderNames.size();
+    public Integer getOrdersCount(String Name) throws invalidNameException {
+    	if(this.orderNames.containsKey(Name))
+    		return this.orderNames.get(Name).size();
+    	throw new invalidNameException(Name);
     }
 
     /**

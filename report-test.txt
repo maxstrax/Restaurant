@@ -1,0 +1,131 @@
+MENU
+====
+
+STARTER
+	Smoked Salmon			6.0
+	Carrot Soup				3.5
+
+MAIN
+	Chicken Balerno			9.0
+	Roast Beef				10.0
+	Pizza Americana			10.2
+
+DESSERT
+	Chocolate gateau		4.0
+	Chocolate Cake			4.5
+
+DRINKS
+	Coffee and Mints		2.5
+	Margarita lemon			7.0
+	Cosmopolitan			7.0
+
+FREQUENCY REPORT
+================
+Carrot Soup					12
+Chicken Balerno				8
+Chocolate Cake				3
+Chocolate gateau			5
+Coffee and Mints			4
+Cosmopolitan				7
+Margarita lemon				9
+Pizza Americana				4
+Roast Beef					10
+Smoked Salmon				10
+
+DISHES NOT ORDERED
+==================
+
+TABLE SUMMARY
+=============
+TABLE 1
+Smoked Salmon				3 * 6,00 = 18.0
+Carrot Soup					1 * 3,50 = 3.5
+Chicken Balerno				1 * 9,00 = 9.0
+Roast Beef					1 * 10,00 = 10.0
+Pizza Americana				2 * 10,20 = 20.4
+Chocolate gateau			2 * 4,00 = 8.0
+Coffee and Mints			2 * 2,50 = 5.0
+Margarita lemon				2 * 7,00 = 14.0
+
+=====
+Total for this table :		87,90
+Discount :					15,58
+Discounted total :			72,32
+
+TABLE SUMMARY
+=============
+TABLE 2
+Smoked Salmon				2 * 6,00 = 12.0
+Chicken Balerno				1 * 9,00 = 9.0
+Roast Beef					1 * 10,00 = 10.0
+Coffee and Mints			2 * 2,50 = 5.0
+
+=====
+Total for this table :		36,00
+Discount :					5,20
+Discounted total :			30,80
+
+TABLE SUMMARY
+=============
+TABLE 3
+Pizza Americana				1 * 10,20 = 10.2
+
+=====
+Total for this table :		10,20
+Discount :					0,04
+Discounted total :			10,16
+
+TABLE SUMMARY
+=============
+TABLE 4
+Chocolate Cake				2 * 4,50 = 9.0
+
+=====
+Total for this table :		9,00
+Discount :					0,00
+Discounted total :			9,00
+
+TABLE SUMMARY
+=============
+TABLE 5
+Carrot Soup					2 * 3,50 = 7.0
+Chicken Balerno				1 * 9,00 = 9.0
+Roast Beef					1 * 10,00 = 10.0
+
+=====
+Total for this table :		26,00
+Discount :					3,20
+Discounted total :			22,80
+
+TABLE SUMMARY
+=============
+TABLE 6
+Smoked Salmon				2 * 6,00 = 12.0
+Carrot Soup					5 * 3,50 = 17.5
+Chicken Balerno				3 * 9,00 = 27.0
+Roast Beef					2 * 10,00 = 20.0
+Pizza Americana				1 * 10,20 = 10.2
+Chocolate gateau			3 * 4,00 = 12.0
+Chocolate Cake				1 * 4,50 = 4.5
+Margarita lemon				7 * 7,00 = 49.0
+Cosmopolitan				7 * 7,00 = 49.0
+
+=====
+Total for this table :		201,20
+Discount :					38,24
+Discounted total :			162,96
+
+TABLE SUMMARY
+=============
+TABLE 7
+Smoked Salmon				3 * 6,00 = 18.0
+Carrot Soup					4 * 3,50 = 14.0
+Chicken Balerno				2 * 9,00 = 18.0
+Roast Beef					5 * 10,00 = 50.0
+
+=====
+Total for this table :		100,00
+Discount :					18,00
+Discounted total :			82,00
+
+Grant Total : 				390.0
