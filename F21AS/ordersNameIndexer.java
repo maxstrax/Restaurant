@@ -3,7 +3,8 @@ package F21AS;
 import java.util.*;
 
 /**
- * 
+ * @author Marios Katsigiannis
+ * Used to create an indexer of 
  */
 public class ordersNameIndexer {
 

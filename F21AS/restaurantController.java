@@ -165,7 +165,7 @@ public class restaurantController {
         }
         s += "\n=====\n";
         s += "Total for this table :\t\t" + price_total + "\n";
-        discount = this.calculateDiscount(price_total);
+        discount = restaurantController.calculateDiscount(price_total);
         s += "Discount :\t\t\t\t\t" + discount + "\n";
         s += "Discounted total :\t\t\t" + (price_total - discount) + "\n";
         return s;
@@ -276,7 +276,7 @@ public class restaurantController {
      * @param toPay 
      * @return
      */
-    public float calculateDiscount(float toPay) {
+    public static float calculateDiscount(float toPay) {
         // TODO implement here
         return (toPay > 10.0f)? 0.2f * (toPay - 10.0f) : 0.0f;
     }

@@ -1,20 +1,19 @@
 package tests;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 
 import java.util.HashSet;
-import java.util.LinkedList;
 import java.util.Set;
 
 import org.junit.Before;
 import org.junit.Test;
 
 import F21AS.invalidNameException;
-import F21AS.invalidTableIdException;
 import F21AS.orderItem;
 import F21AS.orders;
 import F21AS.ordersNameIndexer;
-import F21AS.ordersTableIndexer;
 
 public class ordersNameIndexerTest {
 	orders o = new orders();
