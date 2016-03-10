@@ -33,10 +33,10 @@ public class restaurant {
         try {
 	        model = new restaurantModel();
 	        controller = new restaurantController(model);
-	        view = new restaurantView(controller, model);
 			controller.loadMenu("./menu-initial.txt");
 	        controller.loadOrders("./orders-initial.txt");
 	        controller.createIndexers();
+	        view = new restaurantView(controller, model);
 	        controller.saveReport("report.txt");
 	        view.showGUI();
 		} catch (Exception e) {

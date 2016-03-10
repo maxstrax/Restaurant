@@ -1,9 +1,13 @@
 package F21AS;
+
 /**
  * Contains all the data of the application. Use objects of the restaurantController class to manipulate the objects of this class.
  */
-public class restaurantModel {
-
+public class restaurantModel extends Observable {
+	
+	public static final int EverythingChanged = -1;
+	public static final int MenuChanged = 0;
+	public static final int OrdersChanged = 1;
     /**
      * 
      */
@@ -42,6 +46,7 @@ public class restaurantModel {
 
 	public void setMainMenu(menu mainMenu) {
 		this.mainMenu = mainMenu;
+		this.invokeAll(MenuChanged, this);
 	}
 
 
@@ -70,6 +75,7 @@ public class restaurantModel {
 
 	public void setDailyOrders(orders dailyOrders) {
 		this.dailyOrders = dailyOrders;
+		this.invokeAll(OrdersChanged, this);
 	}
 
 

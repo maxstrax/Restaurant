@@ -80,6 +80,7 @@ public class restaurantController {
 				this.model.mainMenu.addItem(new menuItem(ss[0].trim(), Float.parseFloat(ss[1].trim()), c));
 			}
 			br.close();
+			this.model.invokeAllNoReason();
 		} catch (IllegalArgumentException e) { ///all other exception types must be returned as is
 			throw new invalidFileFormatException();
 		}

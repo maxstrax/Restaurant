@@ -5,7 +5,7 @@ import javax.swing.SwingUtilities;
 /**
  * Used to provide a Graphical User Interface, as well as command line interface to the user.
  */
-public class restaurantView {
+public class restaurantView implements Observer {
 
 
     /**
@@ -58,6 +58,15 @@ public class restaurantView {
     public void showUI() {
         // TODO implement here
     }
+
+	@Override
+	public void invoke(int reason, Object data) {
+		// TODO Auto-generated method stub
+		if(reason == restaurantModel.EverythingChanged) {
+			
+		}
+		
+	}
 
 }
 
