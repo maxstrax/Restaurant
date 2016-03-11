@@ -21,10 +21,24 @@ package F21AS;
  * }
  */
 public class Singleton {
+	/**
+	 * The one and only reference of the pattern
+	 */
 	private static Singleton reference = null;
+	/**
+	 * the default constructor enforces that the reference will be set by exactly one
+	 * object before it is being used
+	 */
 	public Singleton() {
 		Singleton.setReference(this);
 	}
+	/**
+	 * Sets the reference of the singleton only if it has not been set to an object before.
+	 * If called with null as parameter will not set the reference but will return whether the
+	 * reference has been previously set.
+	 * @param s the object to set the reference to.
+	 * @return true if the reference was not set, false otherwise.
+	 */
 	public static boolean setReference(Singleton s) {
 		if(Singleton.reference == null) {
 			Singleton.reference = s;
@@ -32,9 +46,17 @@ public class Singleton {
 		}
 		return false;
 	}
+	/**
+	 * Returns the reference of the singleton
+	 * @return
+	 */
 	public static Singleton getReference() {
 		return Singleton.reference;
 	}
+	/**
+	 * Checks whether the reference of the singleton is set to the specified object
+	 * @param ref
+	 */
 	public static boolean checkReference(Singleton ref) {
 		return ref == Singleton.reference;
 	}

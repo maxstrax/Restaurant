@@ -155,9 +155,9 @@ public class restaurantController {
         float price_total = 0.0f, discount = 0.0f, price;
         orderItem oi;
         menuItem mi;
-        int orderindex, menuindex, count = this.model.dailyOrdersTableIndexer.getOrdersCount(tableId);
+        int orderindex, menuindex, count = this.model.dailyOrdersTableIndexer.getTable(tableId).count();
         for(int i=0; i<count; i++) {
-			orderindex = this.model.dailyOrdersTableIndexer.getIndexOf(tableId, i);
+			orderindex = this.model.dailyOrdersTableIndexer.getTable(tableId).getOrder(i);
         	oi = this.model.dailyOrders.getItem(orderindex);
         	menuindex = this.model.mainMenuIndexer.getIndexOf(oi.getName());
         	mi = this.model.mainMenu.getMenu(menuindex);

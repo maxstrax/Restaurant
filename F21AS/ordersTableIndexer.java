@@ -10,7 +10,7 @@ public class ordersTableIndexer {
     /**
      * 
      */
-    private HashMap<Integer, LinkedList<Integer>> tableOrders;
+    private HashMap<Integer, Table> tableOrders;
 
 
     /**
@@ -21,15 +21,15 @@ public class ordersTableIndexer {
     public void create(orders dailyOrders) {
     	this.tableOrders.clear(); //if we have previous values, clear them up. DEBUG INFO <- if it crushes here orderNames is not allocated with new
     	int tableId;
-    	LinkedList<Integer> l = null;
+    	Table t = null;
     	for(int i=0; i<dailyOrders.countItems(); i++) {
     		tableId = dailyOrders.getItem(i).getTableId();
     		if(!tableOrders.containsKey(tableId)) {	// if key does not exist
-    			l = new LinkedList<Integer>();			//   create a new linkedlist
-    			tableOrders.put(tableId, l);		//   add it as the value to the key (order name)
+    			t = new Table(tableId);				//   create a new linkedlist
+    			tableOrders.put(tableId, t);		//   add it as the value to the key (order name)
     		}
     												// if key exists -> the list is allocated and initialized
-    		tableOrders.get(tableId).add(i);	//   add the new key at the end
+    		tableOrders.get(tableId).addOrderIndex(i);;	//   add the new key at the end
     	}
     }
 
@@ -43,43 +43,30 @@ public class ordersTableIndexer {
     }
 
     /**
-     * Returns the amount of orders given for a tableId
-     * @param tableId 
-     * @return
-     * @throws invalidTableIdException 
-     */
-    public Integer getOrdersCount(Integer tableId) throws invalidTableIdException {
-    	if(this.tableOrders.containsKey(tableId))
-    		return this.tableOrders.get(tableId).size();
-    	else
-    		throw new invalidTableIdException(tableId);
-    }
-
-    /**
      * Returns the index of an order  of a table.
      * @param tableId 
      * @param OrderNo 
      * @return
+     * @throws invalidTableIdException 
      */
-    public Integer getIndexOf(Integer tableId, Integer OrderNo) throws invalidTableIdException, ArrayIndexOutOfBoundsException {
+    public Table getTable(Integer tableId) throws invalidTableIdException {
         if(!this.tableOrders.containsKey(tableId))
         	throw new invalidTableIdException(tableId);
         else {
-        	List<Integer> indices = this.tableOrders.get(tableId);
-        	if(indices.size() <= OrderNo || OrderNo < 0)
-        		throw new ArrayIndexOutOfBoundsException(OrderNo);
-        	else
-        		return indices.get(OrderNo);
+        	return this.tableOrders.get(tableId);
         }
-    }
 
+    }
+    public boolean tableExists(Integer tableId) {
+    	return this.tableOrders.containsKey(tableId);
+    }
     /**
      * calls create(dailyOrders)
      * @param dailyOrders
      */
     public ordersTableIndexer(orders dailyOrders) {
-    	this.tableOrders = new HashMap<Integer, LinkedList<Integer>>(); //init our map
+    	this.tableOrders = new HashMap<Integer, Table>(); //init our map
     	this.create(dailyOrders);
     }
-
+    
 }

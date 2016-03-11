@@ -25,18 +25,18 @@ public class ordersTableIndexerTest {
 	public void testGetIndexOf() {
 		ordersTableIndexer oti = new ordersTableIndexer(o);
 		try {
-			assertEquals((Integer)1, oti.getIndexOf(1, 0));
+			assertEquals((Integer)1, oti.getTable(1).getOrder(0));
 		} catch (invalidTableIdException e) {
 			fail("InvalidTableIdException thrown when it should not");
 		}
 		try {
-			oti.getIndexOf(2,2);
+			oti.getTable(2).getOrder(2);
 			fail("InvalidTableIdException not thrown");
 		} catch (invalidTableIdException e) {
 			//success!
 		}
 		try {
-			oti.getIndexOf(1,2);
+			oti.getTable(1).getOrder(2);
 			fail("ArrayIndexOutOfBoundsException not thrown");
 		} catch (ArrayIndexOutOfBoundsException e) {
 			//success!
@@ -49,12 +49,12 @@ public class ordersTableIndexerTest {
 	public void testGetOrdersCount() {
 		ordersTableIndexer oti = new ordersTableIndexer(o);
 		try {
-			assertEquals((Integer)1, oti.getOrdersCount(1));
+			assertEquals((Integer)1, oti.getTable(1).count());
 		} catch (invalidTableIdException e) {
 			fail("InvalidTableIdException thrown when it should not");
 		}
 		try {
-			oti.getOrdersCount(2);
+			oti.getTable(2).count();
 			fail("InvalidTableIdException not thrown");
 		} catch (invalidTableIdException e) {
 			//success!
