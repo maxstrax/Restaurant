@@ -7,10 +7,10 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
+import F21AS.Tables;
 import F21AS.invalidTableIdException;
 import F21AS.orderItem;
 import F21AS.orders;
-import F21AS.ordersTableIndexer;
 
 public class ordersTableIndexerTest {
 	orders o = new orders();
@@ -18,12 +18,12 @@ public class ordersTableIndexerTest {
 	public void setUp() throws Exception {
 		o.addItem(new orderItem(15, "Roasted Beef", 5));
 		o.addItem(new orderItem(1, "Food 2", 6));
-		o.addItem(new orderItem(7, "Raosted Steel", 2));
+		o.addItem(new orderItem(7, "Roasted Steel", 2));
 	}
 	
 	@Test
 	public void testGetIndexOf() {
-		ordersTableIndexer oti = new ordersTableIndexer(o);
+		Tables oti = new Tables(o);
 		try {
 			assertEquals((Integer)1, oti.getTable(1).getOrder(0));
 		} catch (invalidTableIdException e) {
@@ -47,7 +47,7 @@ public class ordersTableIndexerTest {
 	}
 	
 	public void testGetOrdersCount() {
-		ordersTableIndexer oti = new ordersTableIndexer(o);
+		Tables oti = new Tables(o);
 		try {
 			assertEquals((Integer)1, oti.getTable(1).count());
 		} catch (invalidTableIdException e) {

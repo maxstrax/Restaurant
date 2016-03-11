@@ -27,7 +27,7 @@ public class restaurantModel extends Observable {
     /**
      * 
      */
-    public ordersTableIndexer dailyOrdersTableIndexer;
+    public Tables dailyOrdersTableIndexer;
 
     /**
      * 
@@ -81,7 +81,7 @@ public class restaurantModel extends Observable {
 
 
 
-	public ordersTableIndexer getDailyOrdersTableIndexer() {
+	public Tables getDailyOrdersTableIndexer() {
 		return dailyOrdersTableIndexer;
 	}
 
@@ -89,7 +89,7 @@ public class restaurantModel extends Observable {
 
 
 	public void setDailyOrdersTableIndexer(
-			ordersTableIndexer dailyOrdersTableIndexer) {
+			Tables dailyOrdersTableIndexer) {
 		this.dailyOrdersTableIndexer = dailyOrdersTableIndexer;
 	}
 

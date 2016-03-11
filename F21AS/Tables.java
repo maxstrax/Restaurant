@@ -5,7 +5,7 @@ import java.util.*;
 /**
  * 
  */
-public class ordersTableIndexer {
+public class Tables {
 
     /**
      * 
@@ -21,18 +21,24 @@ public class ordersTableIndexer {
     public void create(orders dailyOrders) {
     	this.tableOrders.clear(); //if we have previous values, clear them up. DEBUG INFO <- if it crushes here orderNames is not allocated with new
     	int tableId;
-    	Table t = null;
     	for(int i=0; i<dailyOrders.countItems(); i++) {
     		tableId = dailyOrders.getItem(i).getTableId();
-    		if(!tableOrders.containsKey(tableId)) {	// if key does not exist
-    			t = new Table(tableId);				//   create a new linkedlist
-    			tableOrders.put(tableId, t);		//   add it as the value to the key (order name)
-    		}
-    												// if key exists -> the list is allocated and initialized
-    		tableOrders.get(tableId).addOrderIndex(i);;	//   add the new key at the end
+    		addOrderIndex(tableId, i);
     	}
     }
-
+    /**
+     * Used to add orders one by one
+     * @param tableId
+     * @param index
+     */
+    public void addOrderIndex(Integer tableId, Integer index) {
+    	if(!tableOrders.containsKey(tableId)) {	// if key does not exist
+    		Table t = new Table(tableId);		//   create a new linkedlist
+			tableOrders.put(tableId, t);		//   add it as the value to the key (order name)
+		}
+														// if key exists -> the list is allocated and initialized
+		tableOrders.get(tableId).addOrderIndex(index);	//   add the new key at the end
+    }
     /**
      * Returns all the indexed TableIds
      * @return
@@ -60,13 +66,15 @@ public class ordersTableIndexer {
     public boolean tableExists(Integer tableId) {
     	return this.tableOrders.containsKey(tableId);
     }
-    /**
+     public Tables() {
+    	this.tableOrders = new HashMap<Integer, Table>(); //init our map
+    }
+   /**
      * calls create(dailyOrders)
      * @param dailyOrders
      */
-    public ordersTableIndexer(orders dailyOrders) {
-    	this.tableOrders = new HashMap<Integer, Table>(); //init our map
+    public Tables(orders dailyOrders) {
+    	this(); //init our map
     	this.create(dailyOrders);
     }
-    
 }
