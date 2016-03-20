@@ -9,7 +9,7 @@ public class restaurantModel extends Observable {
 	public static final int MenuChanged = 0;
 	public static final int OrdersChanged = 1;
     /**
-     * 
+     * This variable holds data about the menu of the restaurant
      */
     public menu mainMenu;
 
@@ -27,7 +27,7 @@ public class restaurantModel extends Observable {
     /**
      * 
      */
-    public Tables dailyOrdersTableIndexer;
+    public ordersTableIndexer dailyOrdersTableIndexer;
 
     /**
      * 
@@ -81,15 +81,14 @@ public class restaurantModel extends Observable {
 
 
 
-	public Tables getDailyOrdersTableIndexer() {
+	public ordersTableIndexer getDailyOrdersTableIndexer() {
 		return dailyOrdersTableIndexer;
 	}
 
 
 
 
-	public void setDailyOrdersTableIndexer(
-			Tables dailyOrdersTableIndexer) {
+	public void setDailyOrdersTableIndexer(ordersTableIndexer dailyOrdersTableIndexer) {
 		this.dailyOrdersTableIndexer = dailyOrdersTableIndexer;
 	}
 

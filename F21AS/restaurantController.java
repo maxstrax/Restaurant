@@ -38,7 +38,7 @@ public class restaurantController {
         if(model == null)
         	return;
         this.model.dailyOrdersNameIndexer = new ordersNameIndexer(this.model.dailyOrders);
-        this.model.dailyOrdersTableIndexer = new Tables(this.model.dailyOrders);
+        this.model.dailyOrdersTableIndexer = new ordersTableIndexer(this.model.dailyOrders);
         this.model.mainMenuIndexer = new menuIndexer(this.model.mainMenu);
         this.model.mainMenuCategoryIndexer = new menuCategoryIndexer(this.model.mainMenu);
     }

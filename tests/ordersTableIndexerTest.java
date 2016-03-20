@@ -7,7 +7,7 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import F21AS.Tables;
+import F21AS.ordersTableIndexer;
 import F21AS.invalidTableIdException;
 import F21AS.orderItem;
 import F21AS.orders;
@@ -23,7 +23,7 @@ public class ordersTableIndexerTest {
 	
 	@Test
 	public void testGetIndexOf() {
-		Tables oti = new Tables(o);
+		ordersTableIndexer oti = new ordersTableIndexer(o);
 		try {
 			assertEquals((Integer)1, oti.getTable(1).getOrder(0));
 		} catch (invalidTableIdException e) {
@@ -47,7 +47,7 @@ public class ordersTableIndexerTest {
 	}
 	
 	public void testGetOrdersCount() {
-		Tables oti = new Tables(o);
+		ordersTableIndexer oti = new ordersTableIndexer(o);
 		try {
 			assertEquals((Integer)1, oti.getTable(1).count());
 		} catch (invalidTableIdException e) {

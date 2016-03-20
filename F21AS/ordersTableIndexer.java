@@ -5,12 +5,12 @@ import java.util.*;
 /**
  * 
  */
-public class Tables {
+public class ordersTableIndexer {
 
     /**
      * 
      */
-    private HashMap<Integer, Table> tableOrders;
+    private HashMap<Integer, TableIndexer> tableOrders;
 
 
     /**
@@ -33,7 +33,7 @@ public class Tables {
      */
     public void addOrderIndex(Integer tableId, Integer index) {
     	if(!tableOrders.containsKey(tableId)) {	// if key does not exist
-    		Table t = new Table(tableId);		//   create a new linkedlist
+    		TableIndexer t = new TableIndexer(tableId);		//   create a new linkedlist
 			tableOrders.put(tableId, t);		//   add it as the value to the key (order name)
 		}
 														// if key exists -> the list is allocated and initialized
@@ -55,7 +55,7 @@ public class Tables {
      * @return
      * @throws invalidTableIdException 
      */
-    public Table getTable(Integer tableId) throws invalidTableIdException {
+    public TableIndexer getTable(Integer tableId) throws invalidTableIdException {
         if(!this.tableOrders.containsKey(tableId))
         	throw new invalidTableIdException(tableId);
         else {
@@ -66,14 +66,14 @@ public class Tables {
     public boolean tableExists(Integer tableId) {
     	return this.tableOrders.containsKey(tableId);
     }
-     public Tables() {
-    	this.tableOrders = new HashMap<Integer, Table>(); //init our map
+     public ordersTableIndexer() {
+    	this.tableOrders = new HashMap<Integer, TableIndexer>(); //init our map
     }
    /**
      * calls create(dailyOrders)
      * @param dailyOrders
      */
-    public Tables(orders dailyOrders) {
+    public ordersTableIndexer(orders dailyOrders) {
     	this(); //init our map
     	this.create(dailyOrders);
     }
