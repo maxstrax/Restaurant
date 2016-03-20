@@ -14,12 +14,21 @@ import java.util.concurrent.locks.ReentrantLock;
 public class Waiter {
 	private orderItem order;
 	private Boolean fromKitchen; //true = to table, false = to kitchen
-	private Kitchen kitchen;
 	private orders target;
 	private static long workingTime = 1000L; //1 second per operation
-	Lock datalock, workinglock;
-	public Waiter(Kitchen kitchen) {
-		this.kitchen = kitchen;
+	private Lock datalock, workinglock;
+	
+	public static long getWorkingTime() {
+		return workingTime;
+	}
+	public orderItem getOrder() {
+		return this.order;
+	}
+	public boolean getDirection() {
+		return this.fromKitchen;
+	}
+	
+	public Waiter() {
 		this.freeUp();
 		datalock = new ReentrantLock();
 		workinglock = new ReentrantLock();
@@ -37,27 +46,16 @@ public class Waiter {
 	public boolean isFree() {
 		return this.order != null;
 	}
-	public boolean placeOrder(orderItem order) {
+	public boolean serveOrder(orderItem order, orders target, boolean fromKitchen) {
 		datalock.lock(); //used only to ensure that the waiter will be free, when called
-		if(this.isFree()) {
+		if(this.isFree() || order.getStatus() == orderStatus.ordered) {
 			datalock.unlock();
 			return false;
 		}	
 		this.order = order;
 		datalock.unlock(); //the isFree will now return false, thus no need to keep the lock anymore
-		this.fromKitchen = false;
-		this.target = null;
-		return true;
-	}
-	public boolean serveOrder(orderItem order, orders target) {
-		datalock.lock(); //used only to ensure that the waiter will be free, when called
-		if(this.isFree()) {
-			datalock.unlock();
-			return false;
-		}	
-		this.order = order;
-		datalock.unlock(); //the isFree will now return false, thus no need to keep the lock anymore
-		this.fromKitchen = true;
+		this.order.setStatus(orderStatus.onWaiter);
+		this.fromKitchen = fromKitchen;
 		this.target = target;
 		return true;
 	}
@@ -76,10 +74,11 @@ public class Waiter {
 			return false;
 		}
 		slackALittle();
+		this.target.addItem(this.order);
 		if(this.fromKitchen)
-			this.kitchen.addOrder(this.order);
+			this.order.setStatus(orderStatus.inKitchen);
 		else
-			this.target.addItem(this.order);
+			this.order.setStatus(orderStatus.delivered);
 		this.freeUp();
 		workinglock.unlock();
 		return true;

@@ -34,7 +34,13 @@ public class restaurantModel extends Observable {
      */
     public ordersNameIndexer dailyOrdersNameIndexer;
 
+    public Tables tables;
 
+
+    /**
+    * 
+    */
+	public Waiter waiter;
 
 
     public menu getMainMenu() {
@@ -105,7 +111,14 @@ public class restaurantModel extends Observable {
 	public void setDailyOrdersNameIndexer(ordersNameIndexer dailyOrdersNameIndexer) {
 		this.dailyOrdersNameIndexer = dailyOrdersNameIndexer;
 	}
+	
+    public Tables getTables() {
+		return tables;
+	}
 
+    public Waiter getWaiter() {
+		return waiter;
+	}
 
 
 
@@ -115,6 +128,7 @@ public class restaurantModel extends Observable {
     public restaurantModel() {
         this.dailyOrders = new orders();
         this.mainMenu = new menu();
+        //this.waiter = new Waiter();
         // the structures are empty now, creating the indexers at this point will serve no purpose
         this.dailyOrdersTableIndexer = null;
         this.dailyOrdersNameIndexer = null;

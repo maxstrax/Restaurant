@@ -4,6 +4,7 @@ package F21AS;
  */
 public class orderItem {
 
+	private  Integer id;
     /**
      * 
      */
@@ -19,9 +20,21 @@ public class orderItem {
      */
     private Integer quantity;
 
+    private orderStatus status;
 
-
-
+    /**
+     * 
+     * @param id
+     * @param TableId
+     * @param Name
+     * @param Quantity
+     */
+    public orderItem(Integer Id, Integer TableId, String Name, Integer Quantity) {
+    	this.id = Id;
+    	this.tableId=TableId;
+    	this.name=Name;
+    	this.quantity=Quantity;
+    }
 
 
     /**
@@ -30,10 +43,7 @@ public class orderItem {
      * @param Quantity
      */
     public orderItem(Integer TableId, String Name, Integer Quantity) {
-
-    	this.tableId=TableId;
-    	this.name=Name;
-    	this.quantity=Quantity;
+    	this(null, TableId, Name, Quantity);
     }
 
     /**
@@ -85,5 +95,27 @@ public class orderItem {
         // TODO implement here
         return quantity;
     }
+
+	/**
+	 * @return the status
+	 */
+	public orderStatus getStatus() {
+		return status;
+	}
+
+	/**
+	 * @param status the status to set
+	 */
+	public void setStatus(orderStatus status) {
+		this.status = status;
+	}
+
+	/**
+	 * @return the id
+	 */
+	public Integer getId() {
+		return id;
+	}
+
 
 }

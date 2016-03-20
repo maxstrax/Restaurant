@@ -55,5 +55,21 @@ public class orders {
     public orders() {
     	this.items = new ArrayList<orderItem> (); 
     }
-
+    
+    public void removeItem(int index) {
+    	this.items.remove(index);
+    }
+    
+    /**
+     * Removes the last item of the orders list and returns it.
+     * @return the last item of the orders list
+     */
+    public orderItem pop() {
+    	if(this.countItems() != 0) {
+    		orderItem item = this.getItem(this.countItems() - 1);
+    		this.removeItem(this.countItems() - 1);
+    		return item;
+    	}
+    	return null;
+    }
 }
