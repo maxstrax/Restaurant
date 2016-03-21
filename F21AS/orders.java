@@ -1,6 +1,8 @@
 package F21AS;
 
 import java.util.*;
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
 
 /**
  * Holds a list of all the orders
@@ -16,6 +18,7 @@ public class orders extends Observable {
      */
     private ArrayList<orderItem> items;
 
+    private Lock datalock;
 
 
 
@@ -43,14 +46,19 @@ public class orders extends Observable {
      * @return
      */
     public void addItem(orderItem Item) {
+    	this.datalock.lock();
         this.items.add(Item);
+        this.datalock.unlock();
+        this.invokeAll(orders.ItemAdded, this);
     }
 
     /**
      * @return
      */
     public void clearOrders() {
+    	this.datalock.lock();
     	this.items.clear();
+    	this.datalock.unlock();
     	this.invokeAll(orders.ItemsCleared, this);
     }
 
@@ -59,10 +67,13 @@ public class orders extends Observable {
      */
     public orders() {
     	this.items = new ArrayList<orderItem> (); 
+    	this.datalock = new ReentrantLock();
     }
     
     public void removeItem(int index) {
+    	this.datalock.lock();
     	this.items.remove(index);
+    	this.datalock.unlock();
     	this.invokeAll(orders.ItemRemoved, this);
     }
     
