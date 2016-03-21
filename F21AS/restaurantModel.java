@@ -1,5 +1,6 @@
 package F21AS;
 
+
 /**
  * Contains all the data of the application. Use objects of the restaurantController class to manipulate the objects of this class.
  */
