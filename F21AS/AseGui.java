@@ -3,6 +3,7 @@ import java.awt.BorderLayout;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.TreeSet;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -25,6 +26,7 @@ public class AseGui extends JFrame implements ActionListener{
     JTextArea result;
     restaurantController controller;
     restaurantModel model;
+    //ordersTableIndexer oti;
     
     public AseGui(restaurantController controller, restaurantModel model) {
         super("Order Details");
@@ -62,8 +64,11 @@ public class AseGui extends JFrame implements ActionListener{
  
     @Override
 	public void actionPerformed(ActionEvent e) {
- 
+    	
     	if(e.getSource() == search){
+    		//for(Integer i : new TreeSet<Integer> (model.getDailyOrdersTableIndexer().getTableIds()))
+    			//System.out.println(i);
+    		//System.out.println("count:" +model.getDailyOrdersTableIndexer().getTableIds().size());
 	    	String text = searchField.getText();
 	    	try {
 	    		result.setText(controller.getBill(Integer.parseInt(text)));

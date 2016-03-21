@@ -32,9 +32,9 @@ public class Waiter {
 	}
 	
 	public Waiter() {
-		this.freeUp();
 		datalock = new ReentrantLock();
 		workinglock = new ReentrantLock();
+		this.freeUp();
 	}
 	//ensures that 
 	private void freeUp() {

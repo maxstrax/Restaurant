@@ -45,7 +45,7 @@ public class restaurantView implements Observer {
     		 
             @Override
             public void run() {
-                new AseGui(Controller,Model).setVisible(true);
+                new guiFrame(Controller,Model).setVisible(true);
                 
             }
         });
