@@ -28,6 +28,10 @@ public class Tables {
 			tables.put(tableId, table);		//   add it as the value to the key (order name)
 		}
     }
+    public void addTables(Collection<Integer> tableIds) {
+    	for(Integer table : tableIds)
+    		this.addTable(table);
+    }
     /**
      * Returns all the TableIds
      * @return
@@ -41,7 +45,7 @@ public class Tables {
      * @param tableId 
      * @param OrderNo 
      * @return
-     * @throws invalidTableIdException 
+     * @throws invalidTableIdException
      */
     public orders getTable(Integer tableId) throws invalidTableIdException {
         if(!this.tables.containsKey(tableId))

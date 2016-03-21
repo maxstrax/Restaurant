@@ -41,6 +41,7 @@ public class restaurantController {
         this.model.dailyOrdersTableIndexer = new ordersTableIndexer(this.model.dailyOrders);
         this.model.mainMenuIndexer = new menuIndexer(this.model.mainMenu);
         this.model.mainMenuCategoryIndexer = new menuCategoryIndexer(this.model.mainMenu);
+        this.model.tables.addTables(this.model.dailyOrdersTableIndexer.getTableIds());
     }
 
     /**
@@ -318,4 +319,47 @@ public class restaurantController {
         this.setModel(newModel);
     }
 
+    ///public
+    public void operateTheRestaurant() {
+    	this.model.operate = true;
+    	
+    	Thread toKitchen, toTable;
+    	toKitchen = new Thread(new Runnable(){
+			@Override
+			public void run() {
+				orderItem item;
+				while(model.operate && model.dailyOrders.countItems() != 0) {
+					item = model.dailyOrders.pop();
+					model.waiterKitchen.serveOrder(item, model.kitchen, false);
+					model.waiterKitchen.performCurrentOperation();
+				}
+			}
+    	});
+    	toTable = new Thread(new Runnable(){
+			@Override
+			public void run() {
+				orderItem item;
+				while(model.operate && model.kitchen.countItems() != 0) {
+					item = model.dailyOrders.pop();
+					try {
+						while(model.waiterTables.serveOrder(item, model.tables.getTable(item.getTableId()), false));
+					} catch (invalidTableIdException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				}
+			}
+    	});
+    	toKitchen.start();
+    	toTable.start();
+    	
+    	try {
+			toKitchen.join();
+	    	toTable.join();
+
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+    }
 }

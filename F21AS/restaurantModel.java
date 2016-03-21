@@ -36,13 +36,15 @@ public class restaurantModel extends Observable {
 
     public Tables tables;
 
+    public orders kitchen;
 
     /**
     * 
     */
-	public Waiter waiter;
+	public Waiter waiterKitchen, waiterTables;
 
-
+	public boolean operate;
+	
     public menu getMainMenu() {
 		return mainMenu;
 	}
@@ -116,9 +118,20 @@ public class restaurantModel extends Observable {
 		return tables;
 	}
 
-    public Waiter getWaiter() {
-		return waiter;
+
+
+
+	public Waiter getWaiterKitchen() {
+		return waiterKitchen;
 	}
+
+
+
+
+	public Waiter getWaiterTables() {
+		return waiterTables;
+	}
+
 
 
 
@@ -128,7 +141,11 @@ public class restaurantModel extends Observable {
     public restaurantModel() {
         this.dailyOrders = new orders();
         this.mainMenu = new menu();
-        //this.waiter = new Waiter();
+        this.waiterKitchen = new Waiter();
+        this.waiterTables = new Waiter();
+        this.kitchen = new orders();
+        this.tables = new Tables();
+        this.operate = false;
         // the structures are empty now, creating the indexers at this point will serve no purpose
         this.dailyOrdersTableIndexer = null;
         this.dailyOrdersNameIndexer = null;

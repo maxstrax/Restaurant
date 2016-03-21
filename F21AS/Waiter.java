@@ -15,11 +15,14 @@ public class Waiter {
 	private orderItem order;
 	private Boolean fromKitchen; //true = to table, false = to kitchen
 	private orders target;
-	private static long workingTime = 1000L; //1 second per operation
+	private long workingTime = 1000L; //1 second per operation
 	private Lock datalock, workinglock;
 	
-	public static long getWorkingTime() {
+	public long getWorkingTime() {
 		return workingTime;
+	}
+	public void setWorkingTime(long workingTime) {
+		this.workingTime = workingTime;
 	}
 	public orderItem getOrder() {
 		return this.order;
@@ -61,7 +64,7 @@ public class Waiter {
 	}
 	private void slackALittle() {
 		try {
-			Thread.sleep(Waiter.workingTime);
+			Thread.sleep(this.workingTime);
 		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
