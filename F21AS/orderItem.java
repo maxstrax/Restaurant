@@ -30,10 +30,15 @@ public class orderItem {
      * @param Quantity
      */
     public orderItem(Integer Id, Integer TableId, String Name, Integer Quantity) {
+    	this(Id, TableId, Name, Quantity, orderStatus.delivered);
+    }
+    
+    public orderItem(Integer Id, Integer TableId, String Name, Integer Quantity, orderStatus status) {
     	this.id = Id;
     	this.tableId=TableId;
     	this.name=Name;
     	this.quantity=Quantity;
+    	this.status=status;
     }
 
 
