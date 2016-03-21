@@ -5,8 +5,12 @@ import java.util.*;
 /**
  * Holds a list of all the orders
  */
-public class orders {
+public class orders extends Observable {
 
+	public static final int ItemsCleared = 0;
+	public static final int ItemAdded = 1;
+	public static final int ItemRemoved = 2;
+	
     /**
      * 
      */
@@ -47,6 +51,7 @@ public class orders {
      */
     public void clearOrders() {
     	this.items.clear();
+    	this.invokeAll(orders.ItemsCleared, this);
     }
 
     /**
@@ -58,6 +63,7 @@ public class orders {
     
     public void removeItem(int index) {
     	this.items.remove(index);
+    	this.invokeAll(orders.ItemRemoved, this);
     }
     
     /**
@@ -68,6 +74,7 @@ public class orders {
     	if(this.countItems() != 0) {
     		orderItem item = this.getItem(this.countItems() - 1);
     		this.removeItem(this.countItems() - 1);
+    		this.invokeAll(orders.ItemRemoved, this);
     		return item;
     	}
     	return null;

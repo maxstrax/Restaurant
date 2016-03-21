@@ -42,6 +42,6 @@ public class TableIndexer {
 	public Integer getOrder(Integer index) {
 		if(orders != null && orders.size() > index)
 			return orders.get(index);
-		return null;
+		throw new ArrayIndexOutOfBoundsException("Table order index" + index + " does not exist");
 	}
 }

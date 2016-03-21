@@ -329,8 +329,8 @@ public class restaurantController {
 				orderItem item;
 				while(model.operate && model.dailyOrders.countItems() != 0) {
 					item = model.dailyOrders.pop();
-					model.waiterKitchen.serveOrder(item, model.kitchen, false);
-					model.waiterKitchen.performCurrentOperation();
+					while(!model.waiterKitchen.serveOrder(item, model.kitchen, false));
+					while(!model.waiterKitchen.performCurrentOperation());
 				}
 			}
     	});
@@ -339,9 +339,10 @@ public class restaurantController {
 			public void run() {
 				orderItem item;
 				while(model.operate && model.kitchen.countItems() != 0) {
-					item = model.dailyOrders.pop();
+					item = model.kitchen.pop();
 					try {
-						while(model.waiterTables.serveOrder(item, model.tables.getTable(item.getTableId()), false));
+						while(!model.waiterTables.serveOrder(item, model.tables.getTable(item.getTableId()), false));
+						while(!model.waiterTables.performCurrentOperation());
 					} catch (invalidTableIdException e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
@@ -362,6 +363,7 @@ public class restaurantController {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+    	this.model.operate = false;
     }
     
     public void stop() {

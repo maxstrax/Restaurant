@@ -47,11 +47,11 @@ public class Waiter {
 		workinglock.unlock();
 	}
 	public boolean isFree() {
-		return this.order != null;
+		return this.order == null;
 	}
 	public boolean serveOrder(orderItem order, orders target, boolean fromKitchen) {
 		datalock.lock(); //used only to ensure that the waiter will be free, when called
-		if(this.isFree() || order.getStatus() == orderStatus.ordered) {
+		if(!this.isFree() || order.getStatus() == orderStatus.ordered) {
 			datalock.unlock();
 			return false;
 		}	
@@ -82,8 +82,8 @@ public class Waiter {
 			this.order.setStatus(orderStatus.inKitchen);
 		else
 			this.order.setStatus(orderStatus.delivered);
-		this.freeUp();
 		workinglock.unlock();
+		this.freeUp();
 		return true;
 	}
 }
