@@ -23,16 +23,18 @@ public class genPanel extends JPanel  {
 			this.act=action;
 			//labelOfPanel.setText(name);
 			//button.setText(buttonName);
-		
+			this.setBounds(20, 20, 20, 20);
 			this.setLayout(new BorderLayout());
 			button = new JButton(buttonName);
 			button.addActionListener(act);
 	        data = new JTextArea(20, 30);
 	        labelOfPanel= new JLabel(name);
-	        
-	        this.add(button,BorderLayout.EAST);
-	        this.add(labelOfPanel,BorderLayout.WEST);
-	        this.add(data,BorderLayout.SOUTH);
+	        JPanel p = new JPanel();
+	        p.setLayout(new BorderLayout());
+	        p.add(button,BorderLayout.EAST);
+	        p.add(labelOfPanel,BorderLayout.WEST);
+	        this.add(p, BorderLayout.NORTH);
+	        this.add(data,BorderLayout.CENTER);
 			
 			        
 	        
