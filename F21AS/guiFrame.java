@@ -21,8 +21,8 @@ public class guiFrame extends JFrame{
     
     public guiFrame(restaurantController controller, restaurantModel model) {
         super("Order Details");
-        //this.setBounds(100, 200, 500, 500);
-        this.setExtendedState( this.getExtendedState()|JFrame.MAXIMIZED_BOTH );
+        this.setBounds(100, 100, 1000, 600);
+        //this.setExtendedState( this.getExtendedState()|JFrame.MAXIMIZED_BOTH );
         this.controller=controller;
         this.model=model;
 	    setDefaultCloseOperation(EXIT_ON_CLOSE);
@@ -34,7 +34,7 @@ public class guiFrame extends JFrame{
 	    JPanel p =new JPanel();
 	    
 	    
-	    p.setLayout(new FlowLayout());
+	    p.setLayout(new GridLayout(model.tables.getTableIds().size(),1));
 	    for(Integer tableId : model.tables.getTableIds())
 	    {
 	    	panel=new genPanel("TABLE "+tableId,"Get Bill", new  tableAction(controller,tableId));
@@ -42,7 +42,7 @@ public class guiFrame extends JFrame{
 	    	 p.add(panel);
 	    }
 	    this.add(p);
-	    scrollFrame= new JScrollPane(p,JScrollPane.VERTICAL_SCROLLBAR_ALWAYS,JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+	    scrollFrame= new JScrollPane(p);//,JScrollPane.VERTICAL_SCROLLBAR_ALWAYS,JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
         //panel=new genPanel("1","2",ev);
         this.add(scrollFrame);
           
