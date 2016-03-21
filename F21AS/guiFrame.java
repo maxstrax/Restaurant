@@ -21,7 +21,7 @@ public class guiFrame extends JFrame{
     
     public guiFrame(restaurantController controller, restaurantModel model) {
         super("Order Details");
-        this.setBounds(100, 200, 500, 500);
+        //this.setBounds(100, 200, 500, 500);
         this.setExtendedState( this.getExtendedState()|JFrame.MAXIMIZED_BOTH );
         this.controller=controller;
         this.model=model;
@@ -33,7 +33,7 @@ public class guiFrame extends JFrame{
 	    this.add(kitchPanel);
 	    JPanel p =new JPanel();
 	    
-	    this.add(p);
+	    
 	    p.setLayout(new FlowLayout());
 	    for(Integer tableId : model.tables.getTableIds())
 	    {
@@ -41,8 +41,8 @@ public class guiFrame extends JFrame{
 	    	System.out.println(tableId);
 	    	 p.add(panel);
 	    }
-	    scrollFrame= new JScrollPane(p);//,JScrollPane.VERTICAL_SCROLLBAR_ALWAYS,
-	            //JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+	    this.add(p);
+	    scrollFrame= new JScrollPane(p,JScrollPane.VERTICAL_SCROLLBAR_ALWAYS,JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
         //panel=new genPanel("1","2",ev);
         this.add(scrollFrame);
           
