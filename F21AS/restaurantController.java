@@ -156,10 +156,9 @@ public class restaurantController {
         float price_total = 0.0f, discount = 0.0f, price;
         orderItem oi;
         menuItem mi;
-        int orderindex, menuindex, count = this.model.dailyOrdersTableIndexer.getTable(tableId).count();
+        int menuindex, count = this.model.tables.getTable(tableId).countItems();
         for(int i=0; i<count; i++) {
-			orderindex = this.model.dailyOrdersTableIndexer.getTable(tableId).getOrder(i);
-        	oi = this.model.dailyOrders.getItem(orderindex);
+        	oi = this.model.tables.getTable(tableId).getItem(i);
         	menuindex = this.model.mainMenuIndexer.getIndexOf(oi.getName());
         	mi = this.model.mainMenu.getMenu(menuindex);
         	price = (oi.getQuantity() * mi.getPrice());
@@ -188,7 +187,7 @@ public class restaurantController {
         	return "";
         String s = "", p;
         float price = 0;
-        for(int tableId : new TreeSet<Integer>(this.model.dailyOrdersTableIndexer.getTableIds())) {
+        for(int tableId : new TreeSet<Integer>(this.model.tables.getTableIds())) {
         	s += this.getBill(tableId) + "\n";
         	p = s.substring(s.lastIndexOf("Discounted total :\t\t\t", s.length()) + "Discounted total :\t\t\t".length(),
         			s.length());
@@ -350,16 +349,22 @@ public class restaurantController {
 				}
 			}
     	});
-    	toKitchen.start();
-    	toTable.start();
     	
     	try {
+	    	toKitchen.start();
+	    	toTable.start();
 			toKitchen.join();
 	    	toTable.join();
-
 		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+		} catch(IllegalThreadStateException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
+    }
+    
+    public void stop() {
+    	this.model.operate = false;
     }
 }
