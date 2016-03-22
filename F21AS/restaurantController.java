@@ -340,7 +340,7 @@ public class restaurantController {
 				orderItem item;
 				while(model.operate)
 					while(model.dailyOrders.countItems() != 0) {
-						item = model.dailyOrders.pop();
+						item = model.dailyOrders.popFront(); //first come first served
 						while(!model.waiterKitchen.serveOrder(item, model.kitchen, false));
 						while(!model.waiterKitchen.performCurrentOperation());
 					}
@@ -352,7 +352,7 @@ public class restaurantController {
 				orderItem item;
 				while(model.operate)
 					while(model.kitchen.countItems() != 0) {
-						item = model.kitchen.pop();
+						item = model.kitchen.popFront();
 						try {
 							while(!model.waiterTables.serveOrder(item, model.tables.getTable(item.getTableId()), true));
 							while(!model.waiterTables.performCurrentOperation());

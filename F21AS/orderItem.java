@@ -48,7 +48,7 @@ public class orderItem {
      * @param Quantity
      */
     public orderItem(Integer TableId, String Name, Integer Quantity) {
-    	this(null, TableId, Name, Quantity);
+    	this(new Log().getNextID(), TableId, Name, Quantity);
     }
 
     /**

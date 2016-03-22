@@ -77,18 +77,25 @@ public class orders extends Observable {
     	this.invokeAll(orders.ItemRemoved, this);
     }
     
-    /**
-     * Removes the last item of the orders list and returns it.
-     * @return the last item of the orders list
-     */
-    public orderItem pop() {
-    	if(this.countItems() != 0) {
-    		orderItem item = this.getItem(this.countItems() - 1);
-    		this.removeItem(this.countItems() - 1);
+    
+    public orderItem pop(int index) {
+    	if(this.countItems() > index) {
+    		orderItem item = this.getItem(index);
+    		this.removeItem(index);
     		this.invokeAll(orders.ItemRemoved, this);
     		return item;
     	}
     	return null;
+    }
+   /**
+     * Removes the last item of the orders list and returns it.
+     * @return the last item of the orders list
+     */
+    public orderItem popBack() {
+    	return this.pop(this.countItems() - 1);
+    }
+    public orderItem popFront() {
+    	return this.pop(0);
     }
     
     public String toString() {
