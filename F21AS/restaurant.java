@@ -37,7 +37,7 @@ public class restaurant {
 	        controller.loadOrders("./orders-initial.txt");
 	        controller.createIndexers();
 	        view = new restaurantView(controller, model);
-	        controller.saveReport("report.txt");
+	        
 	        view.showGUI();
 	        controller.operateTheRestaurant();
 		} catch (Exception e) {

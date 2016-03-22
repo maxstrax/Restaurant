@@ -5,6 +5,8 @@ import java.io.BufferedWriter;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.Map;
+import java.util.TreeMap;
 import java.util.TreeSet;
 
 /**
@@ -147,7 +149,7 @@ public class restaurantController {
      * @throws invalidPriceException 
      */
     public String getBill(Integer tableId) throws ArrayIndexOutOfBoundsException, invalidTableIdException, invalidNameException, invalidPriceException {
-    	if(model == null || this.model.dailyOrdersTableIndexer == null || this.model.mainMenuIndexer == null)
+    	if(model == null || this.model.mainMenuIndexer == null)// || this.model.dailyOrdersTableIndexer == null)
         	return "";
         String s;
         s = "TABLE SUMMARY\n";
@@ -201,27 +203,36 @@ public class restaurantController {
      * returns a string with the frequency with which an item was orders
      * @return
      * @throws invalidNameException 
+     * @throws invalidTableIdException 
+     * @throws ArrayIndexOutOfBoundsException 
      */
-    public String getFrequency() throws invalidNameException {
-    	if(this.model == null || this.model.dailyOrdersNameIndexer == null || this.model.mainMenuIndexer == null)
+    public String getFrequency() throws invalidNameException, ArrayIndexOutOfBoundsException, invalidTableIdException {
+    	if(this.model == null || this.model.mainMenuIndexer == null)// || this.model.dailyOrdersNameIndexer == null)
         	return "";
         String s = "";
         s += "FREQUENCY REPORT\n";
         s += "================\n";
-        int quantity;
-        for(String name : new TreeSet<String>(this.model.dailyOrdersNameIndexer.getNames())) {
-        	if(!this.model.mainMenuIndexer.getNames().contains(name))
-        		throw new invalidNameException(name);
-        	quantity = 0;
-        	for(int i=0; i<this.model.dailyOrdersNameIndexer.getOrdersCount(name); i++)
-        		quantity += this.model.dailyOrders.getItem(this.model.dailyOrdersNameIndexer.getIndexOf(name, i)).getQuantity();
-        	s += name + calculateTabs(name, 24) + quantity + "\n";
+        String name;
+        TreeMap<String, Integer> ordered = new TreeMap<String, Integer>();
+        for(Integer tableid : this.model.tables.getTableIds())
+        	for(int i=0; i<this.model.tables.getTable(tableid).countItems(); i++) {
+        		name = this.model.tables.getTable(tableid).getItem(i).getName();
+        		if(!ordered.containsKey(name))
+        			ordered.put(name, (Integer)1);
+        		else
+        			ordered.put(name, ordered.get(name) + 1);
+        	}
+        for(Map.Entry<String, Integer> pair : ordered.entrySet()) {
+        	if(!this.model.mainMenuIndexer.getNames().contains(pair.getKey()))
+        		throw new invalidNameException(pair.getKey());
+        	
+        	s += pair.getKey() + calculateTabs(pair.getKey(), 24) + pair.getValue() + "\n";
         }
         s += "\nDISHES NOT ORDERED\n";
         s += "==================\n";
-        for(String name : new TreeSet<String>(this.model.mainMenuIndexer.getNames()))
-        	if(!this.model.dailyOrdersNameIndexer.getNames().contains(name))
-        		s += name + "\n";
+        for(String Name : new TreeSet<String>(this.model.mainMenuIndexer.getNames()))
+        	if(!ordered.containsKey(Name))
+        		s += Name + "\n";
         return s;
     }
 
@@ -346,7 +357,6 @@ public class restaurantController {
 							while(!model.waiterTables.serveOrder(item, model.tables.getTable(item.getTableId()), true));
 							while(!model.waiterTables.performCurrentOperation());
 						} catch (invalidTableIdException e) {
-							// TODO Auto-generated catch block
 							e.printStackTrace();
 						}
 					}
@@ -359,14 +369,18 @@ public class restaurantController {
 			toKitchen.join();
 	    	toTable.join();
 		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch(IllegalThreadStateException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-    	this.model.operate = false;
     	new Log().showMessage(this.model.tables.toString());
+    	this.model.operate = false;
+    	try {
+			this.saveReport("report.txt");
+		} catch (ArrayIndexOutOfBoundsException | IOException | invalidNameException | invalidTableIdException
+				| invalidCategoryException | invalidPriceException e) {
+			e.printStackTrace();
+		}
     }
     
     public void stop() {

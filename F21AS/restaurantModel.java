@@ -44,7 +44,7 @@ public class restaurantModel extends Observable {
     */
 	public Waiter waiterKitchen, waiterTables;
 
-	public boolean operate;
+	public volatile boolean operate;
 	
     public menu getMainMenu() {
 		return mainMenu;
