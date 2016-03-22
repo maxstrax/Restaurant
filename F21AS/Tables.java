@@ -4,6 +4,8 @@
 package F21AS;
 
 import java.util.*;
+
+import javax.xml.crypto.dsig.keyinfo.KeyValue;
 /**
  * @author Marios Katsigiannis
  *
@@ -47,18 +49,26 @@ public class Tables {
      * @return
      * @throws invalidTableIdException
      */
-    public orders getTable(Integer tableId) throws invalidTableIdException {
-        if(!this.tables.containsKey(tableId))
-        	throw new invalidTableIdException(tableId);
-        else {
-        	return this.tables.get(tableId);
-        }
+	public orders getTable(Integer tableId) throws invalidTableIdException {
+		if(!this.tables.containsKey(tableId))
+	    	throw new invalidTableIdException(tableId);
+		else {
+	    	return this.tables.get(tableId);
+		}
+	
+	}
+	public boolean tableExists(Integer tableId) {
+		return this.tables.containsKey(tableId);
+	}
+	 public Tables() {
+		this.tables = new HashMap<Integer, orders>(); //init our map
+	}
+     
+	 public String toString() {
+    	String result = "Tables:\n";
+    	for(Map.Entry<Integer, orders> p : this.tables.entrySet())
+    		result += "Table " + p.getKey() +"\n" + p.getValue().toString() + "\n";
+    	return result;
 
-    }
-    public boolean tableExists(Integer tableId) {
-    	return this.tables.containsKey(tableId);
-    }
-     public Tables() {
-    	this.tables = new HashMap<Integer, orders>(); //init our map
-    }
+	 }
 }

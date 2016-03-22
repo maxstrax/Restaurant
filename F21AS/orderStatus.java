@@ -8,8 +8,8 @@ package F21AS;
  * contains the status of an order.
  */
 public enum orderStatus {
-	ordered,
-	onWaiter,
-	inKitchen,
-	delivered
+	Ordered,
+	Carried,
+	Kitchen,
+	Delivered
 }

@@ -5,7 +5,7 @@ import java.util.concurrent.locks.ReentrantLock;
 
 public class Log extends Singleton{
 	
-	private static Lock datalock = null;
+	//private static Lock datalock = null;
 	
 	private static int nextID;
 	
@@ -13,7 +13,7 @@ public class Log extends Singleton{
 		super();
 		if(!Singleton.checkReference(this)) {
 			nextID=0;
-			datalock=new ReentrantLock();
+			//datalock=new ReentrantLock();
 		}
 	}
 	
@@ -21,11 +21,11 @@ public class Log extends Singleton{
 		if(!Singleton.checkReference(this))
 			((Log)Singleton.getReference()).showMessage(message);
 		else {
-			if(datalock!=null)
-				datalock.lock();
+			//if(datalock!=null)
+			//	datalock.lock();
 			System.out.println(message);
-			if(datalock!=null)
-				datalock.unlock();
+			//if(datalock!=null)
+			//	datalock.unlock();
 		}
 	}
 	
@@ -33,11 +33,11 @@ public class Log extends Singleton{
 		if(!Singleton.checkReference(this))
 			return ((Log)Singleton.getReference()).getNextID();
 		else {
-			if(datalock!=null)
-				datalock.lock();
+			//if(datalock!=null)
+			//	datalock.lock();
 			int result=nextID++;
-			if(datalock!=null)
-				datalock.unlock();
+			//if(datalock!=null)
+			//	datalock.unlock();
 			return result;
 		}
 	}

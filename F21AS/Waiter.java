@@ -51,13 +51,14 @@ public class Waiter {
 	}
 	public boolean serveOrder(orderItem order, orders target, boolean fromKitchen) {
 		datalock.lock(); //used only to ensure that the waiter will be free, when called
-		if(!this.isFree() || order.getStatus() == orderStatus.ordered) {
+		if(!this.isFree() || order.getStatus() == orderStatus.Ordered) {
 			datalock.unlock();
 			return false;
 		}	
 		this.order = order;
 		datalock.unlock(); //the isFree will now return false, thus no need to keep the lock anymore
-		this.order.setStatus(orderStatus.onWaiter);
+		this.order.setStatus(orderStatus.Carried);
+		new Log().showMessage("order:" + order.toString() + " served to " + this.order.getStatus());
 		this.fromKitchen = fromKitchen;
 		this.target = target;
 		return true;
@@ -76,12 +77,13 @@ public class Waiter {
 			workinglock.unlock();
 			return false;
 		}
-		slackALittle();
+		this.slackALittle();
 		this.target.addItem(this.order);
 		if(this.fromKitchen)
-			this.order.setStatus(orderStatus.inKitchen);
+			this.order.setStatus(orderStatus.Delivered);
 		else
-			this.order.setStatus(orderStatus.delivered);
+			this.order.setStatus(orderStatus.Kitchen);
+		new Log().showMessage("order:" + order.toString() + " served to " + this.order.getStatus());
 		workinglock.unlock();
 		this.freeUp();
 		return true;

@@ -30,7 +30,7 @@ public class orderItem {
      * @param Quantity
      */
     public orderItem(Integer Id, Integer TableId, String Name, Integer Quantity) {
-    	this(Id, TableId, Name, Quantity, orderStatus.delivered);
+    	this(Id, TableId, Name, Quantity, orderStatus.Delivered);
     }
     
     public orderItem(Integer Id, Integer TableId, String Name, Integer Quantity, orderStatus status) {
@@ -122,5 +122,7 @@ public class orderItem {
 		return id;
 	}
 
-
+    public String toString() {
+    	return this.id + ": " + this.getName() + " * " + this.getQuantity() + " on " + this.getTableId();
+    }
 }

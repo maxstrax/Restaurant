@@ -90,4 +90,11 @@ public class orders extends Observable {
     	}
     	return null;
     }
+    
+    public String toString() {
+    	String result = "";
+    	for(orderItem o : this.items)
+    		result += o.toString() + "\n";
+    	return result;
+    }
 }

@@ -77,5 +77,5 @@ public class menuItem {
     	this.name=Name;
     	this.category=Category;
     }
-
+    
 }

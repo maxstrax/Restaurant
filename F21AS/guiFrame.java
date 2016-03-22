@@ -44,7 +44,7 @@ public class guiFrame extends JFrame{
 	    for(Integer tableId : model.tables.getTableIds())
 	    {
 	    	panel=new genPanel("TABLE "+tableId,"Get Bill", new  tableAction(controller,tableId));
-	    	System.out.println(tableId);
+	    	//System.out.println(tableId);
 	    	 p.add(panel);
 	    }
 	    
