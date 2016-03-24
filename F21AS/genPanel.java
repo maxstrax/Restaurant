@@ -22,12 +22,12 @@ public class genPanel extends JPanel  {
 			this.buttonName=buttonName;
 			this.act=action;
 		
-			this.setBounds(20, 20, 20, 20);
+			this.setBounds(20, 20, 20, 10);
 			this.setLayout(new BorderLayout());
 			
 			button = new JButton(buttonName);
 			button.addActionListener(act);
-	        data = new JTextArea(20, 30);
+	        data = new JTextArea(20, 10);
 	        labelOfPanel= new JLabel(name);
 	        
 	        JPanel p = new JPanel();

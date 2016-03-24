@@ -1,7 +1,5 @@
 package F21AS;
 
-import javax.swing.SwingUtilities;
-
 /**
  * Used to provide a Graphical User Interface, as well as command line interface to the user.
  */
@@ -18,7 +16,8 @@ public class restaurantView implements Observer {
      */
     private restaurantModel Model;
 
-
+    private guiFrame frame = null;
+    //volatile private boolean mustChange = false;
     /**
      * @param Controller 
      * @param Model 
@@ -27,6 +26,8 @@ public class restaurantView implements Observer {
     public void setup(restaurantController Controller, restaurantModel Model) {
        this.Controller=Controller;
        this.Model=Model;
+       this.Model.kitchen.addObserver(this);
+       this.Model.tables.addObserver(this);
     }
 
     /**
@@ -41,31 +42,15 @@ public class restaurantView implements Observer {
      * @return
      */
     public void showGUI() {
-    	SwingUtilities.invokeLater(new Runnable() {
-    		 
-            @Override
-            public void run() {
-                new guiFrame(Controller,Model).setVisible(true);
-                
-            }
-        });
-    	
+    	frame = new guiFrame(Controller,Model);
+        frame.setVisible(true);
     }
 
-    /**
-     * @return
-     */
-    public void showUI() {
-        // TODO implement here
-    }
 
 	@Override
 	public void invoke(int reason, Object data) {
-		// TODO Auto-generated method stub
-		if(reason == restaurantModel.EverythingChanged) {
-			
-		}
-		
+		if(frame != null)
+			this.frame.update();
 	}
 
 }

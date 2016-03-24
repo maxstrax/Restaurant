@@ -143,9 +143,9 @@ public class restaurantModel extends Observable {
         this.dailyOrders = new orders();
         this.mainMenu = new menu();
         this.waiterKitchen = new Waiter();
-        this.waiterKitchen.setWorkingTime(10);
+        this.waiterKitchen.setWorkingTime(1000);
         this.waiterTables = new Waiter();
-        this.waiterTables.setWorkingTime(50);
+        this.waiterTables.setWorkingTime(2000);
         this.kitchen = new orders();
         this.tables = new Tables();
         this.operate = false;

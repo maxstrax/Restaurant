@@ -36,17 +36,16 @@ public class guiFrame extends JFrame{
      
      this.setLayout(new GridLayout(1,2));
      
-     kitchPanel=new genPanel("Kitchen","Stop",new  kitchenAction(controller));
+     kitchPanel=new genPanel("Kitchen","Start/Stop",new  kitchenAction(controller, model));
      this.add(kitchPanel);
      
      JPanel p =new JPanel();
-     
-     p.setLayout(new GridLayout(model.tables.getTableIds().size(),1));
+     int count = model.tables.getTableIds().size();
+     p.setLayout(new GridLayout(count / 2 + count % 2, 2));
      
      for(Integer tableId : model.tables.getTableIds())
      {
       panel=new genPanel("TABLE "+tableId,"Get Bill", new  tableAction(controller,tableId));
-      System.out.println(tableId);
        p.add(panel);
        allPanels.put(tableId, panel);
      }
@@ -63,6 +62,7 @@ public class guiFrame extends JFrame{
     public void update(){
      for(Integer tableId : allPanels.keySet())
      {
+    	 this.kitchPanel.setData(this.model.kitchen.toString());
       try {
     allPanels.get(tableId).setData(this.model.tables.getTable(tableId).toString());
    } catch (invalidTableIdException e) {

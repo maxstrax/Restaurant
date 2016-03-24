@@ -11,7 +11,7 @@ import java.util.Set;
  * @author Marios Katsigiannis
  *
  */
-public class Tables {
+public class Tables extends Observable implements Observer {
 
 
     /**
@@ -28,6 +28,7 @@ public class Tables {
     public void addTable(Integer tableId) {
     	if(!tables.containsKey(tableId)) {	// if key does not exist
     		orders table = new orders();	//   create a new orders
+    		table.addObserver(this);
 			tables.put(tableId, table);		//   add it as the value to the key (order name)
 		}
     }
@@ -72,4 +73,8 @@ public class Tables {
     	return result;
 
 	 }
+	@Override
+	public void invoke(int reason, Object data) {
+		this.invokeAll(reason, data);
+	}
 }

@@ -2,6 +2,7 @@ package F21AS;
 
 import java.util.*;
 import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReadWriteLock;
 import java.util.concurrent.locks.ReentrantLock;
 
 /**
@@ -27,8 +28,13 @@ public class orders extends Observable {
      * @return
      */
     public orderItem getItem(Integer Index) throws ArrayIndexOutOfBoundsException {
-    	if(Index < items.size())
-    		return this.items.get(Index);
+    	
+    	if(Index < items.size()) {
+    		datalock.lock();
+    		orderItem item = this.items.get(Index);
+    		datalock.unlock();
+    		return item;
+    	}
     	throw new ArrayIndexOutOfBoundsException(Index);
 
     }
@@ -37,8 +43,10 @@ public class orders extends Observable {
      * @return
      */
     public Integer countItems() {
-        // TODO implement here
-        return this.items.size();
+        datalock.lock();
+    	int size = this.items.size();
+    	datalock.unlock();
+        return size;
     }
 
     /**
@@ -100,8 +108,10 @@ public class orders extends Observable {
     
     public String toString() {
     	String result = "";
+    	datalock.lock();
     	for(orderItem o : this.items)
     		result += o.toString() + "\n";
+    	datalock.unlock();
     	return result;
     }
 }

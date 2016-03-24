@@ -338,12 +338,12 @@ public class restaurantController {
 			@Override
 			public void run() {
 				orderItem item;
-				while(model.operate)
-					while(model.dailyOrders.countItems() != 0) {
-						item = model.dailyOrders.popFront(); //first come first served
-						while(!model.waiterKitchen.serveOrder(item, model.kitchen, false));
-						while(!model.waiterKitchen.performCurrentOperation());
-					}
+				while(model.operate && model.dailyOrders.countItems() != 0) {
+					item = model.dailyOrders.popFront(); //first come first served
+					while(!model.waiterKitchen.serveOrder(item, model.kitchen, false));
+					while(!model.waiterKitchen.performCurrentOperation());
+				}
+				model.operate = false; //ensure thread number 2 will exit gracefully if the user does not click on stop
 			}
     	});
     	toTable = new Thread(new Runnable(){
@@ -368,13 +368,13 @@ public class restaurantController {
 	    	toTable.start();
 			toKitchen.join();
 	    	toTable.join();
-		} catch (InterruptedException e) {
+		}catch(IllegalThreadStateException e) {
 			e.printStackTrace();
-		} catch(IllegalThreadStateException e) {
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
     	new Log().showMessage(this.model.tables.toString());
-    	this.model.operate = false;
     	try {
 			this.saveReport("report.txt");
 		} catch (ArrayIndexOutOfBoundsException | IOException | invalidNameException | invalidTableIdException
