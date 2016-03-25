@@ -39,7 +39,7 @@ public class restaurant {
 	        view = new restaurantView(controller, model);
 	        
 	        view.showGUI();
-	        //controller.operateTheRestaurant();
+	        controller.operateTheRestaurant();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

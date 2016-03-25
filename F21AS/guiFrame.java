@@ -36,7 +36,7 @@ public class guiFrame extends JFrame{
      
      this.setLayout(new GridLayout(1,2));
      
-     kitchPanel=new genPanel("Kitchen","Start/Stop",new  kitchenAction(controller, model));
+     kitchPanel=new genPanel("Kitchen","Stop",new  kitchenAction(controller));
      this.add(kitchPanel);
      
      JPanel p =new JPanel();

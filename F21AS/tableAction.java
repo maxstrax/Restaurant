@@ -22,7 +22,7 @@ public class tableAction implements ActionListener{
 		try {
 			l.showMessage(con.getBill(id));
 			JOptionPane.showMessageDialog(frame,
-	    	        con.getBill(id),
+	    	        con.getBill(id).replace('\t', ' '),
 	    	        "Bill for Table "+id,
 	    	        JOptionPane.INFORMATION_MESSAGE);
 	        
