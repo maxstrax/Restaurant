@@ -133,13 +133,7 @@ public class restaurantModel extends Observable {
         this.kitchen = new orders();
         this.tables = new Tables();
         this.waiters = new Waiters();
-        Waiter toKitchen = new Waiter(this.operate, this.dailyOrders, this.kitchen, true);
-        this.waiters.addWaiter(toKitchen);
-        Waiter toTables = new Waiter(this.operate, this.kitchen, this.tables);
-        this.waiters.addWaiter(toTables);
         threads = new ThreadManager();
-        threads.add(toKitchen, false);
-        threads.add(toTables, false);
         this.operate = false;
         // the structures are empty now, creating the indexers at this point will serve no purpose
         this.dailyOrdersTableIndexer = null;

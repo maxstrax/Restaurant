@@ -332,63 +332,19 @@ public class restaurantController {
     public void operateTheRestaurant() {
     	this.model.operate = true;
     	this.model.threads.runAll();
+    	while(this.model.operate && this.model.dailyOrders.countItems() != 0)
+			try {
+				Thread.sleep(1000);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+    	this.model.operate = false;
     	this.model.threads.waitAll();
     }
-    ///public
-/*    public void operateTheRestaurant2() {
-    	this.model.operate = true;
-    	Waiter w1 = model.waiterKitchen;
-    	Thread toKitchen, toTable;
-    	toKitchen = new Thread(new Runnable(){
-			@Override
-			public void run() {
-				orderItem item;
-				while(model.operate && model.dailyOrders.countItems() != 0) {
-					item = model.dailyOrders.popFront(); //first come first served
-					while(!w1.serveOrder(item, model.kitchen, false));
-					while(!w1.performCurrentOperation());
-				}
-				model.operate = false; //ensure thread number 2 will exit gracefully if the user does not click on stop
-			}
-    	});
-    	Waiter w2 = model.waiterKitchen;
-    	toTable = new Thread(new Runnable(){
-			@Override
-			public void run() {
-				orderItem item;
-				while(model.operate)
-					while(model.kitchen.countItems() != 0) {
-						item = model.kitchen.popFront();
-						try {
-							while(!w2.serveOrder(item, model.tables.getTable(item.getTableId()), true));
-							while(!w2.performCurrentOperation());
-						} catch (invalidTableIdException e) {
-							e.printStackTrace();
-						}
-					}
-			}
-    	});
-    	
-    	try {
-	    	toKitchen.start();
-	    	toTable.start();
-			toKitchen.join();
-	    	toTable.join();
-		}catch(IllegalThreadStateException e) {
-			e.printStackTrace();
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-    	new Log().showMessage(this.model.tables.toString());
-    	try {
-			this.saveReport("report.txt");
-		} catch (ArrayIndexOutOfBoundsException | IOException | invalidNameException | invalidTableIdException
-				| invalidCategoryException | invalidPriceException e) {
-			e.printStackTrace();
-		}
+
+    public boolean isInOperation() {
+    	return this.model.operate;
     }
-*/
     public void stop() {
     	this.model.operate = false;
     }

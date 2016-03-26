@@ -13,7 +13,7 @@ import java.util.concurrent.locks.ReentrantLock;
  */
 public class Waiter implements Runnable{
 	private volatile boolean hired;
-	private Boolean Continue;
+	private restaurantModel model;
 	private orderItem order;
 	private boolean fromKitchen; //true = to table, false = to kitchen
 	private orders origin;
@@ -35,10 +35,10 @@ public class Waiter implements Runnable{
 		return this.fromKitchen;
 	}
 	
-	public Waiter(Boolean storeOpen, orders origin, Tables targets, orders target, boolean fromKitchen) {
+	public Waiter(restaurantModel model, orders origin, Tables targets, orders target, boolean fromKitchen) {
 		this.datalock = new ReentrantLock();
 		this.workinglock = new ReentrantLock();
-		this.Continue = storeOpen;
+		this.model = model;
 		this.hired = true;
 		this.origin = origin;
 		this.targets = targets;
@@ -46,11 +46,11 @@ public class Waiter implements Runnable{
 		this.fromKitchen = fromKitchen;
 		this.freeUp();
 	}
-	public Waiter(Boolean storeOpen,orders origin, Tables targets) {
-		this(storeOpen, origin, targets, null, true);
+	public Waiter(restaurantModel model,orders origin, Tables targets) {
+		this(model, origin, targets, null, true);
 	}
-	public Waiter(Boolean storeOpen, orders origin, orders target, boolean fromKitchen) {
-		this(storeOpen, null, null, target, fromKitchen);
+	public Waiter(restaurantModel model, orders origin, orders target, boolean fromKitchen) {
+		this(model, origin, null, target, fromKitchen);
 	}
 	
 	//ensures that 
@@ -79,15 +79,15 @@ public class Waiter implements Runnable{
 	public static boolean serveOrder(Waiter waiter, orders target) {
 		orderItem order;
 		waiter.datalock.lock(); //used only to ensure that the waiter will be free, when called
-		if(!waiter.isFree() || waiter.order.getStatus() == orderStatus.Ordered) {
+		if(waiter.isFree() || waiter.order.getStatus() == orderStatus.Ordered) {
 			waiter.datalock.unlock();
 			return false;
 		}
 		order = waiter.order;
 		target.addItem(order);
-		waiter.freeUp();
 		waiter.datalock.unlock(); //the isFree will now return false, thus no need to keep the lock anymore
-		waiter.order.setStatus(orderStatus.Carried);
+		waiter.freeUp();
+		order.setStatus(orderStatus.Delivered);
 		new Log().showMessage("order:" + order.toString() + " served to " + order.getStatus());
 		return true;
 	}
@@ -99,37 +99,31 @@ public class Waiter implements Runnable{
 			e.printStackTrace();
 		}
 	}
-	public static boolean performCurrentOperation(Waiter waiter) throws invalidTableIdException {
-		waiter.workinglock.lock();
-		if(waiter.isFree()) {
-			waiter.workinglock.unlock();
-			return false;
-		}
+	public static void performCurrentOperation(Waiter waiter) throws invalidTableIdException {
 		Waiter.slackALittle(waiter);
-		if(waiter.fromKitchen) {
-			if(waiter.targets != null)
-				Waiter.serveOrder(waiter, waiter.targets.getOrderTarget(waiter.order));
-			else
-				Waiter.serveOrder(waiter, waiter.target);
-			waiter.order.setStatus(orderStatus.Delivered);
-		} else {
-			Waiter.getNextOrder(waiter, waiter.origin);
-			waiter.order.setStatus(orderStatus.Kitchen);
-		}
+		if(waiter.isFree() && waiter.origin.countItems() == 0)
+			return;
+		waiter.workinglock.lock();
+		while(Waiter.getNextOrder(waiter, waiter.origin));
+		orders target;
+		if(waiter.targets != null)
+			target = waiter.targets.getOrderTarget(waiter.order);
+		else
+			target = waiter.target;
+		while(Waiter.serveOrder(waiter, target));
 		waiter.workinglock.unlock();
 		waiter.freeUp();
-		return true;
 	}
 	public boolean shouldContinue(Boolean Continue) {
 		if(!Continue)
 			return false;
-		if(this.fromKitchen && this.origin.countItems() == 0)
+		if(!this.fromKitchen && this.origin.countItems() == 0)
 			return false;
 		return true;
 	}
-	public void operate(Boolean Continue) {
+	public void operate() {
 		try {
-			while(this.shouldContinue(Continue))
+			while(this.shouldContinue(this.model.operate))
 				Waiter.performCurrentOperation(this);
 		} catch (invalidTableIdException e) {
 			e.printStackTrace();
@@ -143,6 +137,6 @@ public class Waiter implements Runnable{
 	}
 	@Override
 	public void run() {
-		this.operate(this.Continue);
+		this.operate();
 	}
 }

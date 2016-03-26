@@ -50,7 +50,7 @@ public class restaurantView implements Observer {
 	@Override
 	public void invoke(int reason, Object data) {
 		if(frame != null)
-			this.frame.update();
+			this.frame.forceUpdate();
 	}
 
 }
