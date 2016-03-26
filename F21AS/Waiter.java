@@ -11,9 +11,13 @@ import java.util.concurrent.locks.ReentrantLock;
  * This class will be used to deliver the dishes to the tables from the kitchen and to the kitchen
  * from the orders!
  */
-public class Waiter {
+public class Waiter implements Runnable{
+	private volatile boolean hired;
+	private Boolean Continue;
 	private orderItem order;
-	private Boolean fromKitchen; //true = to table, false = to kitchen
+	private boolean fromKitchen; //true = to table, false = to kitchen
+	private orders origin;
+	private Tables targets;
 	private orders target;
 	private long workingTime = 1000L; //1 second per operation
 	private Lock datalock, workinglock;
@@ -31,61 +35,114 @@ public class Waiter {
 		return this.fromKitchen;
 	}
 	
-	public Waiter() {
-		datalock = new ReentrantLock();
-		workinglock = new ReentrantLock();
+	public Waiter(Boolean storeOpen, orders origin, Tables targets, orders target, boolean fromKitchen) {
+		this.datalock = new ReentrantLock();
+		this.workinglock = new ReentrantLock();
+		this.Continue = storeOpen;
+		this.hired = true;
+		this.origin = origin;
+		this.targets = targets;
+		this.target = target;
+		this.fromKitchen = fromKitchen;
 		this.freeUp();
 	}
+	public Waiter(Boolean storeOpen,orders origin, Tables targets) {
+		this(storeOpen, origin, targets, null, true);
+	}
+	public Waiter(Boolean storeOpen, orders origin, orders target, boolean fromKitchen) {
+		this(storeOpen, null, null, target, fromKitchen);
+	}
+	
 	//ensures that 
 	private void freeUp() {
 		workinglock.lock(); //ensure that 
 		datalock.lock();
 		order = null;
-		fromKitchen = null;
-		target = null;
 		datalock.unlock();
 		workinglock.unlock();
 	}
 	public boolean isFree() {
 		return this.order == null;
 	}
-	public boolean serveOrder(orderItem order, orders target, boolean fromKitchen) {
-		datalock.lock(); //used only to ensure that the waiter will be free, when called
-		if(!this.isFree() || order.getStatus() == orderStatus.Ordered) {
-			datalock.unlock();
+	public static boolean getNextOrder(Waiter waiter, orders origin) {
+		waiter.datalock.lock(); //used only to ensure that the waiter will be free, when called
+		if(!waiter.isFree() || origin.countItems() == 0) {
+			waiter.datalock.unlock();
 			return false;
-		}	
-		this.order = order;
-		datalock.unlock(); //the isFree will now return false, thus no need to keep the lock anymore
-		this.order.setStatus(orderStatus.Carried);
-		new Log().showMessage("order:" + order.toString() + " served to " + this.order.getStatus());
-		this.fromKitchen = fromKitchen;
-		this.target = target;
+		}
+		waiter.order = origin.popFront();
+		waiter.datalock.unlock(); //the isFree will now return false, thus no need to keep the lock anymore
+		waiter.order.setStatus(orderStatus.Carried);
+		new Log().showMessage("order:" + waiter.order.toString() + " served to " + waiter.order.getStatus());
+		return true;		
+	}
+	public static boolean serveOrder(Waiter waiter, orders target) {
+		orderItem order;
+		waiter.datalock.lock(); //used only to ensure that the waiter will be free, when called
+		if(!waiter.isFree() || waiter.order.getStatus() == orderStatus.Ordered) {
+			waiter.datalock.unlock();
+			return false;
+		}
+		order = waiter.order;
+		target.addItem(order);
+		waiter.freeUp();
+		waiter.datalock.unlock(); //the isFree will now return false, thus no need to keep the lock anymore
+		waiter.order.setStatus(orderStatus.Carried);
+		new Log().showMessage("order:" + order.toString() + " served to " + order.getStatus());
 		return true;
 	}
-	private void slackALittle() {
+	private static void slackALittle(Waiter waiter) {
 		try {
-			Thread.sleep(this.workingTime);
+			Thread.sleep(waiter.workingTime);
 		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
-	public boolean performCurrentOperation() {
-		workinglock.lock();
-		if(this.isFree()) {
-			workinglock.unlock();
+	public static boolean performCurrentOperation(Waiter waiter) throws invalidTableIdException {
+		waiter.workinglock.lock();
+		if(waiter.isFree()) {
+			waiter.workinglock.unlock();
 			return false;
 		}
-		this.slackALittle();
-		this.target.addItem(this.order);
-		if(this.fromKitchen)
-			this.order.setStatus(orderStatus.Delivered);
-		else
-			this.order.setStatus(orderStatus.Kitchen);
-		new Log().showMessage("order:" + order.toString() + " served to " + this.order.getStatus());
-		workinglock.unlock();
-		this.freeUp();
+		Waiter.slackALittle(waiter);
+		if(waiter.fromKitchen) {
+			if(waiter.targets != null)
+				Waiter.serveOrder(waiter, waiter.targets.getOrderTarget(waiter.order));
+			else
+				Waiter.serveOrder(waiter, waiter.target);
+			waiter.order.setStatus(orderStatus.Delivered);
+		} else {
+			Waiter.getNextOrder(waiter, waiter.origin);
+			waiter.order.setStatus(orderStatus.Kitchen);
+		}
+		waiter.workinglock.unlock();
+		waiter.freeUp();
 		return true;
+	}
+	public boolean shouldContinue(Boolean Continue) {
+		if(!Continue)
+			return false;
+		if(this.fromKitchen && this.origin.countItems() == 0)
+			return false;
+		return true;
+	}
+	public void operate(Boolean Continue) {
+		try {
+			while(this.shouldContinue(Continue))
+				Waiter.performCurrentOperation(this);
+		} catch (invalidTableIdException e) {
+			e.printStackTrace();
+		}
+	}
+	public void fire() {
+		this.hired = false;
+	}
+	public boolean isHired() {
+		return this.hired;
+	}
+	@Override
+	public void run() {
+		this.operate(this.Continue);
 	}
 }

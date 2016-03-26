@@ -329,10 +329,15 @@ public class restaurantController {
         this.setModel(newModel);
     }
 
-    ///public
     public void operateTheRestaurant() {
     	this.model.operate = true;
-    	
+    	this.model.threads.runAll();
+    	this.model.threads.waitAll();
+    }
+    ///public
+/*    public void operateTheRestaurant2() {
+    	this.model.operate = true;
+    	Waiter w1 = model.waiterKitchen;
     	Thread toKitchen, toTable;
     	toKitchen = new Thread(new Runnable(){
 			@Override
@@ -340,12 +345,13 @@ public class restaurantController {
 				orderItem item;
 				while(model.operate && model.dailyOrders.countItems() != 0) {
 					item = model.dailyOrders.popFront(); //first come first served
-					while(!model.waiterKitchen.serveOrder(item, model.kitchen, false));
-					while(!model.waiterKitchen.performCurrentOperation());
+					while(!w1.serveOrder(item, model.kitchen, false));
+					while(!w1.performCurrentOperation());
 				}
 				model.operate = false; //ensure thread number 2 will exit gracefully if the user does not click on stop
 			}
     	});
+    	Waiter w2 = model.waiterKitchen;
     	toTable = new Thread(new Runnable(){
 			@Override
 			public void run() {
@@ -354,8 +360,8 @@ public class restaurantController {
 					while(model.kitchen.countItems() != 0) {
 						item = model.kitchen.popFront();
 						try {
-							while(!model.waiterTables.serveOrder(item, model.tables.getTable(item.getTableId()), true));
-							while(!model.waiterTables.performCurrentOperation());
+							while(!w2.serveOrder(item, model.tables.getTable(item.getTableId()), true));
+							while(!w2.performCurrentOperation());
 						} catch (invalidTableIdException e) {
 							e.printStackTrace();
 						}
@@ -382,7 +388,7 @@ public class restaurantController {
 			e.printStackTrace();
 		}
     }
-    
+*/
     public void stop() {
     	this.model.operate = false;
     }

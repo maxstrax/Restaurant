@@ -57,7 +57,6 @@ public class Tables extends Observable implements Observer {
 		else {
 	    	return this.tables.get(tableId);
 		}
-	
 	}
 	public boolean tableExists(Integer tableId) {
 		return this.tables.containsKey(tableId);
@@ -65,7 +64,11 @@ public class Tables extends Observable implements Observer {
 	 public Tables() {
 		this.tables = new HashMap<Integer, orders>(); //init our map
 	}
-     
+	 public orders getOrderTarget(orderItem order) throws invalidTableIdException {
+		 if(!this.tables.containsKey(order.getTableId()))
+			 throw new invalidTableIdException();
+		 return this.tables.get(order.getTableId());
+	 }
 	 public String toString() {
     	String result = "Tables:\n";
     	for(Map.Entry<Integer, orders> p : this.tables.entrySet())
