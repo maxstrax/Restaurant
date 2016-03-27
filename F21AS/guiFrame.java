@@ -16,10 +16,12 @@ public class guiFrame extends JFrame implements ActionListener {
     restaurantModel model;
     genPanel panel;
     genPanel kitchPanel;
+    controlPanel controlPanel;
     JScrollPane scrollFrame;
     private HashMap<Integer, genPanel> allPanels;
     Timer timer;
     private boolean shouldUpdate;
+
     
     public guiFrame(restaurantController controller, restaurantModel model) {
         super("Order Details");
@@ -31,11 +33,16 @@ public class guiFrame extends JFrame implements ActionListener {
         this.controller=controller;
         this.model=model;
         setDefaultCloseOperation(EXIT_ON_CLOSE);
-
-        this.setLayout(new GridLayout(1,2));
-     
+        this.setLayout(new BorderLayout());
+        //this.setLayout(new GridBagLayout());
+        
+        controlPanel = new controlPanel();   
+        
+        //controlPanel.setPreferredSize(controlPanel.getPreferredSize());
+        JPanel p1 = new JPanel();
+        p1.setLayout(new GridLayout(1,2));
+        
         kitchPanel=new genPanel("Kitchen","Stop",new  kitchenAction(controller));
-        this.add(kitchPanel);
      
         JPanel p =new JPanel();
         int count = model.tables.getTableIds().size();
@@ -47,15 +54,21 @@ public class guiFrame extends JFrame implements ActionListener {
         	p.add(panel);
         	allPanels.put(tableId, panel);
         }
-     
-        this.add(p);
-     
-        scrollFrame= new JScrollPane(p);
+        p1.add(kitchPanel);
+        p1.add(p);
         
-        this.add(scrollFrame);
+        scrollFrame= new JScrollPane(p);
+        p1.add(scrollFrame);
+        p1.setPreferredSize(new Dimension(500,700));
+        //p1.setPreferredSize(p1.getPreferredSize());
+        //GridBagConstraints gbc = new GridBagConstraints();
+        this.add(controlPanel, BorderLayout.SOUTH);
+        this.add(p1, BorderLayout.NORTH);
+        
      	this.shouldUpdate = false;
      	this.timer = new Timer(250, this);
      	this.timer.start();
+     	
     }
 
     public void forceUpdate() {
