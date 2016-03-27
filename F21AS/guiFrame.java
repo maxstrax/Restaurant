@@ -3,7 +3,6 @@ package F21AS;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.ArrayList;
 import java.util.HashMap;
 
 import javax.swing.*;
@@ -18,6 +17,10 @@ public class guiFrame extends JFrame implements ActionListener {
     genPanel kitchPanel;
     controlPanel controlPanel;
     JScrollPane scrollFrame;
+    JButton addWaiter;
+    JRadioButton kitchenToTable;
+	JRadioButton tableToKitchen;
+	JSlider controlSpeed;
     private HashMap<Integer, genPanel> allPanels;
     Timer timer;
     private boolean shouldUpdate;
@@ -26,24 +29,24 @@ public class guiFrame extends JFrame implements ActionListener {
     public guiFrame(restaurantController controller, restaurantModel model) {
         super("Order Details");
         
-        this.setBounds(100, 100, 1000, 600);
+        this.setBounds(100, 50, 1300, 740);
         this.allPanels=new HashMap<Integer,genPanel>();
-        //this.setExtendedState( this.getExtendedState()|JFrame.MAXIMIZED_BOTH );
         
         this.controller=controller;
         this.model=model;
         setDefaultCloseOperation(EXIT_ON_CLOSE);
-        this.setLayout(new BorderLayout());
-        //this.setLayout(new GridBagLayout());
-        
-        controlPanel = new controlPanel();   
-        
-        //controlPanel.setPreferredSize(controlPanel.getPreferredSize());
-        JPanel p1 = new JPanel();
-        p1.setLayout(new GridLayout(1,2));
-        
-        kitchPanel=new genPanel("Kitchen","Stop",new  kitchenAction(controller));
-     
+        this.setLayout(new GridLayout(1,2));
+ 
+        addWaiter=new JButton("Add Waiter");
+        kitchenToTable = new JRadioButton("Get orders to the kitchen");
+		tableToKitchen = new JRadioButton("Get orders to the tables");
+		ButtonGroup bg = new ButtonGroup();
+		bg.add(kitchenToTable);
+		bg.add(tableToKitchen);
+  
+        kitchPanel=new genPanel("Kitchen","Stop",new  kitchenAction(controller),addWaiter, kitchenToTable, tableToKitchen, controlSpeed);
+        JPanel p0 = new JPanel();
+        p0.setLayout(new BorderLayout());
         JPanel p =new JPanel();
         int count = model.tables.getTableIds().size();
         p.setLayout(new GridLayout(count / 2 + count % 2, 2));
@@ -54,16 +57,12 @@ public class guiFrame extends JFrame implements ActionListener {
         	p.add(panel);
         	allPanels.put(tableId, panel);
         }
-        p1.add(kitchPanel);
-        p1.add(p);
+        p0.add(p, BorderLayout.WEST);
+        this.add(kitchPanel);
+        //this.add(p);
         
         scrollFrame= new JScrollPane(p);
-        p1.add(scrollFrame);
-        p1.setPreferredSize(new Dimension(500,700));
-        //p1.setPreferredSize(p1.getPreferredSize());
-        //GridBagConstraints gbc = new GridBagConstraints();
-        this.add(controlPanel, BorderLayout.SOUTH);
-        this.add(p1, BorderLayout.NORTH);
+        this.add(scrollFrame, BorderLayout.EAST);
         
      	this.shouldUpdate = false;
      	this.timer = new Timer(250, this);
