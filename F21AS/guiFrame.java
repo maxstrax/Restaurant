@@ -15,7 +15,6 @@ public class guiFrame extends JFrame implements ActionListener {
     restaurantModel model;
     genPanel panel;
     genPanel kitchPanel;
-    controlPanel controlPanel;
     JScrollPane scrollFrame;
     JButton addWaiter;
     JRadioButton kitchenToTable;
