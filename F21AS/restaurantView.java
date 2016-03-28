@@ -1,5 +1,7 @@
 package F21AS;
 
+import javax.swing.SwingUtilities;
+
 /**
  * Used to provide a Graphical User Interface, as well as command line interface to the user.
  */
@@ -42,8 +44,14 @@ public class restaurantView implements Observer {
      * @return
      */
     public void showGUI() {
-    	frame = new guiFrame(Controller,Model);
-        frame.setVisible(true);
+    	SwingUtilities.invokeLater(new Runnable() {
+            @Override
+            public void run() {
+            	frame = new guiFrame(Controller,Model);
+            	frame.setVisible(true);
+            }
+        });
+    	
     }
 
 

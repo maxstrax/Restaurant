@@ -16,14 +16,6 @@ public class genPanel extends JPanel  {
 		ActionListener act;
 		JTextArea data;
 
-		JRadioButton kitchenToTable;
-		JRadioButton tableToKitchen;
-		JButton addWaiter;
-		JSlider controlSpeed;
-		
-		static final int FPS_MIN = 0;
-		static final int FPS_MAX = 10;
-		static final int FPS_INIT = 0;
 		
 		public genPanel(String name,String buttonName,ActionListener action){
 			
@@ -47,10 +39,9 @@ public class genPanel extends JPanel  {
 	        this.setBorder(BorderFactory.createLineBorder(Color.GRAY));
 	        this.add(p, BorderLayout.NORTH);
 	        this.add(data,BorderLayout.CENTER);
-
 		}
 		
-		
+/*		
 		public genPanel(String name, String buttonName, ActionListener action,JButton addWaiter,JRadioButton kitchenToTable,JRadioButton tableToKitchen,JSlider controlSpeed) {
 			super();
 			this.name=name;
@@ -109,9 +100,9 @@ public class genPanel extends JPanel  {
 	        this.add(data,BorderLayout.CENTER);
 	        this.add(p1, BorderLayout.SOUTH);
 	        
-	        p1.setBorder(BorderFactory.createLineBorder(Color.GRAY));
-	        
+	        p1.setBorder(BorderFactory.createLineBorder(Color.GRAY));  
 		}
+*/
 
 
 		public void setData(String dat){

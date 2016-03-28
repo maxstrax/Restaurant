@@ -348,4 +348,21 @@ public class restaurantController {
     public void stop() {
     	this.model.operate = false;
     }
+    
+    private void addWaiter(Waiter waiter) {
+    	this.model.waiters.addWaiter(waiter);
+    	this.model.threads.add(waiter, true);
+    }
+    public Waiter addWaiter(boolean fromKitchen) {
+    	Waiter waiter;
+    	if(fromKitchen)
+			waiter = new Waiter(model, model.kitchen, model.tables);
+		else
+			waiter = new Waiter(model, model.getDailyOrders(), model.kitchen, false);
+    	addWaiter(waiter);
+    	return waiter;
+    }
+    public void setWaiterSpeed(Waiter waiter, long speed) {
+    	waiter.setWorkingTime(speed);
+    }
 }

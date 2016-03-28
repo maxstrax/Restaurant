@@ -41,14 +41,6 @@ public class restaurant {
 	        model.waiters.addWaiter(new Waiter(model, model.dailyOrders, model.kitchen, false));
 		    model.waiters.addWaiter(new Waiter(model, model.kitchen, model.tables));
 	        model.waiters.addAllToManager(model.threads, false);
-/*
-	        Waiter toKitchen = new Waiter(this, this.dailyOrders, this.kitchen, false);
-	        this.waiters.addWaiter(toKitchen);
-	        Waiter toTables = new Waiter(this, this.kitchen, this.tables);
-	        this.waiters.addWaiter(toTables);
-	        threads.add(toKitchen, false);
-	        threads.add(toTables, false);
-*/
 	        view.showGUI();
 	        controller.operateTheRestaurant();
 		} catch (Exception e) {

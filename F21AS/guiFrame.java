@@ -16,10 +16,7 @@ public class guiFrame extends JFrame implements ActionListener {
     genPanel panel;
     genPanel kitchPanel;
     JScrollPane scrollFrame;
-    JButton addWaiter;
-    JRadioButton kitchenToTable;
-	JRadioButton tableToKitchen;
-	JSlider controlSpeed;
+    private ControlPanel controlPanel;
     private HashMap<Integer, genPanel> allPanels;
     Timer timer;
     private boolean shouldUpdate;
@@ -36,16 +33,15 @@ public class guiFrame extends JFrame implements ActionListener {
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         this.setLayout(new GridLayout(1,2));
  
-        addWaiter=new JButton("Add Waiter");
-        kitchenToTable = new JRadioButton("Get orders to the kitchen");
-		tableToKitchen = new JRadioButton("Get orders to the tables");
-		ButtonGroup bg = new ButtonGroup();
-		bg.add(kitchenToTable);
-		bg.add(tableToKitchen);
-  
-        kitchPanel=new genPanel("Kitchen","Stop",new  kitchenAction(controller),addWaiter, kitchenToTable, tableToKitchen, controlSpeed);
-        JPanel p0 = new JPanel();
-        p0.setLayout(new BorderLayout());
+        controlPanel = new ControlPanel(this.model, this.controller);
+        this.model.waiters.addObserver(controlPanel);      
+        kitchPanel=new genPanel("Kitchen","Stop",new  kitchenAction(controller));
+        JPanel leftPanel = new JPanel();
+        leftPanel.setLayout(new BorderLayout());
+        leftPanel.add(controlPanel, BorderLayout.NORTH);
+        leftPanel.add(kitchPanel, BorderLayout.CENTER);
+        this.add(leftPanel);
+        
         JPanel p =new JPanel();
         int count = model.tables.getTableIds().size();
         p.setLayout(new GridLayout(count / 2 + count % 2, 2));
@@ -56,12 +52,12 @@ public class guiFrame extends JFrame implements ActionListener {
         	p.add(panel);
         	allPanels.put(tableId, panel);
         }
-        p0.add(p, BorderLayout.WEST);
-        this.add(kitchPanel);
-        //this.add(p);
+//        JPanel p0 = new JPanel();
+//        p0.setLayout(new BorderLayout());
+//        p0.add(p, BorderLayout.WEST);
         
         scrollFrame= new JScrollPane(p);
-        this.add(scrollFrame, BorderLayout.EAST);
+        this.add(scrollFrame); //, BorderLayout.EAST);
         
      	this.shouldUpdate = false;
      	this.timer = new Timer(250, this);

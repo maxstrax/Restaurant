@@ -18,6 +18,10 @@ public class tableAction implements ActionListener{
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
+		if(this.con.isInOperation()) {
+			JOptionPane.showMessageDialog(JOptionPane.getRootFrame(), "The bill cannot be vieweed before the end of the working day!", "Please press stop button on the Kitchen", JOptionPane.INFORMATION_MESSAGE);
+			return;
+		}
 		Log l = new  Log();
 		try {
 			l.showMessage(con.getBill(id));
