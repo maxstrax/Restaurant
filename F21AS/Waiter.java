@@ -104,20 +104,24 @@ public class Waiter implements Runnable{
 		if(waiter.isFree() && waiter.origin.countItems() == 0)
 			return;
 		waiter.workinglock.lock();
-		while(Waiter.getNextOrder(waiter, waiter.origin));
+		Waiter.getNextOrder(waiter, waiter.origin);
 		orders target;
 		if(waiter.targets != null)
 			target = waiter.targets.getOrderTarget(waiter.order);
 		else
 			target = waiter.target;
-		while(Waiter.serveOrder(waiter, target));
+		Waiter.serveOrder(waiter, target);
 		waiter.workinglock.unlock();
 		waiter.freeUp();
 	}
 	public boolean shouldContinue(Boolean Continue) {
-		if(!Continue)
+		if(!Continue && !this.fromKitchen)
 			return false;
-		if(!this.fromKitchen && this.origin.countItems() == 0)
+//		if(!Continue && !this.fromKitchen && this.origin.countItems() == 0)
+//			return false;
+		if(Continue && !this.fromKitchen && this.origin.countItems() == 0)
+			this.model.operate = false;
+		if(!Continue && this.fromKitchen && this.origin.countItems() == 0)
 			return false;
 		return true;
 	}

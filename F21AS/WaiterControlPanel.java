@@ -53,8 +53,8 @@ public class WaiterControlPanel extends JPanel implements ChangeListener, Action
  			addWaiter.setEnabled(false);
  		}
 		this.add(this.addWaiter);
-		kitchenToTable = new JRadioButton("Get orders to the kitchen");
-		ordersToKitchen = new JRadioButton("Get orders to the tables");
+		kitchenToTable = new JRadioButton("Get orders to the tables");
+		ordersToKitchen = new JRadioButton("Get orders to the kitchen");
 		if(waiter != null)
 			if(!waiter.getDirection())
 				ordersToKitchen.setSelected(true);
@@ -67,8 +67,8 @@ public class WaiterControlPanel extends JPanel implements ChangeListener, Action
 			kitchenToTable.setEnabled(false);
 		}
 		ButtonGroup bg = new ButtonGroup();
-		bg.add(kitchenToTable);
 		bg.add(ordersToKitchen);
+		bg.add(kitchenToTable);
 		this.add(kitchenToTable);
 		this.add(ordersToKitchen);
 		

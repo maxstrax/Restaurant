@@ -25,7 +25,7 @@ public class guiFrame extends JFrame implements ActionListener {
     public guiFrame(restaurantController controller, restaurantModel model) {
         super("Order Details");
         
-        this.setBounds(100, 50, 1300, 740);
+        this.setBounds(0, 0, 1024, 740);
         this.allPanels=new HashMap<Integer,genPanel>();
         
         this.controller=controller;

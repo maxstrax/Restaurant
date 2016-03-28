@@ -42,10 +42,10 @@ public class ThreadManager {
 			t.start();
 	}
 	public void waitAll() {
-		for(Thread t : this.threads)
-			if(t.isAlive())
+		for(int i =0; i<this.threads.size(); i++)
+			if(this.threads.get(i).isAlive())
 				try {
-					t.join();
+					this.threads.get(i).join();
 				} catch (InterruptedException e) {
 					e.printStackTrace();
 				}
